@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.API", "BAAS.API\BAAS.API.csproj", "{DFFD2283-BA15-4236-8504-628E3AAE29E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.Nethereum", "BAAS.Nethereum\BAAS.Nethereum.csproj", "{164D4A45-707E-424B-BD2E-D3DD88FE6C9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.Core", "BAAS.Core\BAAS.Core.csproj", "{D18846AE-937B-4E0A-B291-B6F46158EEDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.Db", "BAAS.Db\BAAS.Db.csproj", "{F6DB7DA0-0F3C-47B2-B159-C0721E8A7460}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.Models", "BAAS.Models\BAAS.Models.csproj", "{62DFAB48-6825-4502-8289-8D19679AF5DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFFD2283-BA15-4236-8504-628E3AAE29E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFFD2283-BA15-4236-8504-628E3AAE29E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFFD2283-BA15-4236-8504-628E3AAE29E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFFD2283-BA15-4236-8504-628E3AAE29E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{164D4A45-707E-424B-BD2E-D3DD88FE6C9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{164D4A45-707E-424B-BD2E-D3DD88FE6C9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{164D4A45-707E-424B-BD2E-D3DD88FE6C9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{164D4A45-707E-424B-BD2E-D3DD88FE6C9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D18846AE-937B-4E0A-B291-B6F46158EEDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D18846AE-937B-4E0A-B291-B6F46158EEDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D18846AE-937B-4E0A-B291-B6F46158EEDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D18846AE-937B-4E0A-B291-B6F46158EEDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6DB7DA0-0F3C-47B2-B159-C0721E8A7460}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6DB7DA0-0F3C-47B2-B159-C0721E8A7460}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6DB7DA0-0F3C-47B2-B159-C0721E8A7460}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6DB7DA0-0F3C-47B2-B159-C0721E8A7460}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62DFAB48-6825-4502-8289-8D19679AF5DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62DFAB48-6825-4502-8289-8D19679AF5DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62DFAB48-6825-4502-8289-8D19679AF5DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62DFAB48-6825-4502-8289-8D19679AF5DF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
