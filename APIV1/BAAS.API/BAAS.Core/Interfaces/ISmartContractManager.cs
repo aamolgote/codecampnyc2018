@@ -1,4 +1,5 @@
 ﻿using BAAS.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,20 @@ namespace BAAS.Core.Interfaces
     {
         Task<SmartContract> CreateSmartContract(SmartContract smartContract);
 
+        Task<List<SmartContract>> GetSmartContracts();
+
+        Task<SmartContract> GetSmartContract(string smartContractAddress);
+
+        Task<List<SmartContractDeployedInstance>> GetSmartContractDeployedInstances(int smartContractId);
+
+        Task<List<SmartContractTransaction>> GetSmartContractTransactionsForDeployedInstance(int smartContractDeployedInstanceId);
+
+        Task<SmartContractDeployedInstanceItem> DeploySmartContract(SmartContractDeployRequest smartContractDeployRequest);
+
+        Task<SmartContractDeployedInstanceItem> ExecuteWriteFunction(SmartContractExecutionRequestPayload smartContractExecutionRequestPayload);
+
+        Task<SmartContractDeployedInstanceItem> ExecuteReadFunction(SmartContractExecutionRequestPayload smartContractExecutionRequestPayload);
+
+        Task<JToken> CompileSmartContract(SmartContractCompilePayload smartContractCompilePayload);
     }
 }

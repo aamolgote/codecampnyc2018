@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F6DB7DA0-0F3C-47B2-B159-C0721E8A7460}</ProjectGuid>
+    <ProjectGuid>{647A33F6-455D-4E72-AF70-8BDC2A41A02B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BAAS.Db</RootNamespace>
-    <AssemblyName>BAAS.Db</AssemblyName>
+    <RootNamespace>BAAS.Logger</RootNamespace>
+    <AssemblyName>BAAS.Logger</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,9 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.5.10\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,10 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountDb.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="DbConfiguration.cs" />
-    <Compile Include="SmartContractDb.cs" />
+    <Compile Include="BlockchainLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -52,10 +57,9 @@
       <Project>{d18846ae-937b-4e0a-b291-b6f46158eede}</Project>
       <Name>BAAS.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BAAS.Models\BAAS.Models.csproj">
-      <Project>{62dfab48-6825-4502-8289-8d19679af5df}</Project>
-      <Name>BAAS.Models</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

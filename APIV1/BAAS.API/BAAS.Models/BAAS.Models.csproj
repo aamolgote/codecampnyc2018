@@ -40,8 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account.cs" />
+    <Compile Include="DltBlock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmartContract.cs" />
+    <Compile Include="SmartContractCompilePayload.cs" />
+    <Compile Include="SmartContractDeployedInstance.cs" />
+    <Compile Include="SmartContractDeployedInstanceItem.cs" />
+    <Compile Include="SmartContractDeployRequest.cs" />
+    <Compile Include="SmartContractExecutionRequestPayload.cs" />
+    <Compile Include="SmartContractFunction.cs" />
+    <Compile Include="SmartContractTransaction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

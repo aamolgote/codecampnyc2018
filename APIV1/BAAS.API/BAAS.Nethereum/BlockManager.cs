@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BAAS.Db
+namespace BAAS.Nethereum
 {
-    public class Class1
+    public class BlockManager
     {
+
     }
 }

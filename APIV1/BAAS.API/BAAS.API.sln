@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.Db", "BAAS.Db\BAAS.Db.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.Models", "BAAS.Models\BAAS.Models.csproj", "{62DFAB48-6825-4502-8289-8D19679AF5DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.Logger", "BAAS.Logger\BAAS.Logger.csproj", "{647A33F6-455D-4E72-AF70-8BDC2A41A02B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{62DFAB48-6825-4502-8289-8D19679AF5DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62DFAB48-6825-4502-8289-8D19679AF5DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62DFAB48-6825-4502-8289-8D19679AF5DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{647A33F6-455D-4E72-AF70-8BDC2A41A02B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{647A33F6-455D-4E72-AF70-8BDC2A41A02B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{647A33F6-455D-4E72-AF70-8BDC2A41A02B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{647A33F6-455D-4E72-AF70-8BDC2A41A02B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
