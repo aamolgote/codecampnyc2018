@@ -8,6 +8,6 @@ namespace BAAS.Core.Interfaces
 {
     public interface IBlockchainLogger
     {
-        void LogException(Exception ex, string message)
+        void LogException(Exception ex, string message);
     }
 }

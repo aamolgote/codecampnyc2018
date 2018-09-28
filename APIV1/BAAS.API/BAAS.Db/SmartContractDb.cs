@@ -15,38 +15,39 @@ namespace BAAS.Db
         public async Task<SmartContract> Create(SmartContract smartContract, List<SmartContractFunction> smartContractFunctions)
         {
             SmartContract mutatedSmartContract = null;
-            try
+
+            using (SqlConnection conn = new SqlConnection(DbConfiguration.ConnectionString))
             {
-                using (SqlConnection conn = new SqlConnection(DbConfiguration.ConnectionString))
+                SqlCommand sqlcmd = new SqlCommand(StoredProcedures.InsertSmartContract, conn);
+                sqlcmd.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlcmd.Parameters.Add(new SqlParameter()
                 {
-                    SqlCommand sqlcmd = new SqlCommand(StoredProcedures.InsertSmartContract, conn);
-                    sqlcmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    sqlcmd.Parameters.Add(new SqlParameter()
-                    {
-                        ParameterName = "@name",
-                        SqlDbType = System.Data.SqlDbType.VarChar,
-                        Value = smartContract.Name
-                    });
-                    sqlcmd.Parameters.Add(new SqlParameter()
-                    {
-                        ParameterName = "@abi",
-                        SqlDbType = System.Data.SqlDbType.Text,
-                        Value = smartContract.Abi
-                    });
-                    sqlcmd.Parameters.Add(new SqlParameter()
-                    {
-                        ParameterName = "@byteCode",
-                        SqlDbType = System.Data.SqlDbType.Text,
-                        Value = smartContract.ByteCode
-                    });
-                    sqlcmd.Parameters.Add(new SqlParameter()
-                    {
-                        ParameterName = "@createdByUserLoginId",
-                        SqlDbType = System.Data.SqlDbType.VarChar,
-                        Value = smartContract.CreatedByUserLoginId
-                    });
-                    conn.Open();
-                    using (var transaction = conn.BeginTransaction())
+                    ParameterName = "@name",
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    Value = smartContract.Name
+                });
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@abi",
+                    SqlDbType = System.Data.SqlDbType.Text,
+                    Value = smartContract.Abi
+                });
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@byteCode",
+                    SqlDbType = System.Data.SqlDbType.Text,
+                    Value = smartContract.ByteCode
+                });
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@createdByUserLoginId",
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    Value = smartContract.CreatedByUserLoginId
+                });
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
                     {
                         sqlcmd.Connection = conn;
                         using (var reader = await sqlcmd.ExecuteReaderAsync())
@@ -102,14 +103,16 @@ namespace BAAS.Db
                         transaction.Commit();
                         conn.Close();
                     }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw ex;
+                    }
                 }
-                return mutatedSmartContract;
             }
-            catch(Exception ex)
-            {
-                
-            }
-            
+            return mutatedSmartContract;
+
+
         }
 
         public Task<SmartContractDeployedInstanceItem> CreateSmartContractDeployedInstance(SmartContractDeployedInstanceItem smartContractDeployedInstanceItem)
@@ -121,7 +124,7 @@ namespace BAAS.Db
         {
             throw new NotImplementedException();
         }
-    ===================
+    
         public Task<SmartContract> GetSmartContract(int smartContractId)
         {
             throw new NotImplementedException();
