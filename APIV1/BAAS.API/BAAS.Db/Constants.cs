@@ -12,7 +12,7 @@ namespace BAAS.Db
         public const string GetUserDltAccountByLoginId = "GetUserDltAccountByLoginId";
         public const string InsertSmartContract = "InsertSmartContract";
         public const string InsertSmartContractFunction = "InsertSmartContractFunction";
-        //public const string GetUserDltAccounts = "GetUserDltAccounts";
+        public const string GetSmartContracts = "GetSmartContracts";
         //public const string GetUserDltAccounts = "GetUserDltAccounts";
         //public const string GetUserDltAccounts = "GetUserDltAccounts";
 

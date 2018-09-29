@@ -124,7 +124,7 @@ namespace BAAS.Db
         {
             throw new NotImplementedException();
         }
-    
+
         public Task<SmartContract> GetSmartContract(int smartContractId)
         {
             throw new NotImplementedException();
@@ -145,9 +145,29 @@ namespace BAAS.Db
             throw new NotImplementedException();
         }
 
-        public Task<List<SmartContract>> GetSmartContracts()
+        public async Task<List<SmartContract>> GetSmartContracts()
         {
-            throw new NotImplementedException();
+            List<SmartContract> smartContracts = new List<SmartContract>();
+            using (SqlConnection conn = new SqlConnection(DbConfiguration.ConnectionString))
+            {
+                SqlCommand sqlcmd = new SqlCommand(StoredProcedures.GetSmartContracts, conn);
+                sqlcmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                var reader = await sqlcmd.ExecuteReaderAsync();
+                while (reader.Read())
+                {
+                    SmartContract smartContract = new SmartContract();
+                    smartContract.SmartContractId = Convert.ToInt32(reader["SmartContractId"]);
+                    smartContract.Name = reader["Name"]?.ToString();
+                    smartContract.Abi = reader["Abi"]?.ToString();
+                    smartContract.ByteCode = reader["ByteCode"]?.ToString();
+                    smartContract.CreatedByUserLoginId = reader["CreatedByUserLoginId"]?.ToString();
+                    smartContract.CreatedDatetime = string.IsNullOrEmpty(reader["CreatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["CreatedDatetime"]);
+                    smartContract.UpdatedDatetime = string.IsNullOrEmpty(reader["UpdatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["UpdatedDatetime"]);
+                    smartContracts.Add(smartContract);
+                }    
+            }
+            return smartContracts;
         }
 
         public Task<List<SmartContractTransaction>> GetSmartContractTransactionsForDeployedInstance(int smartContractDeployedInstanceId)

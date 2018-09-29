@@ -51,6 +51,10 @@ li:nth-child(4n+1){
     color: #5a6268;
 }
 
+.smart-contract-listing .contract-container .contract-name{
+    padding: 5px 0 0 10px;
+}
+
 .smart-contract-listing .contract-container .other-info{
     padding-left: 10px;
     padding-bottom: 10px;

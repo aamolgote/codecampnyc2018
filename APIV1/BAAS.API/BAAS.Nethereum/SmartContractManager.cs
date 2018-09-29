@@ -13,18 +13,30 @@ namespace BAAS.Nethereum
     {
         private ISmartContractDb smartContractDb;
         private IAccountDb accountDb;
-        public SmartContractManager(ISmartContractDb smartContractDb, IAccountDb accountDb)
+        private IBlockchainLogger logger;
+        public SmartContractManager(ISmartContractDb smartContractDb, IAccountDb accountDb, IBlockchainLogger logger)
         {
-
+            this.smartContractDb = smartContractDb;
+            this.accountDb = accountDb;
+            this.logger = logger;
         }
         public Task<SmartContract> CreateSmartContract(SmartContract smartContract)
         {
             return null;
         }
 
-        public Task<List<SmartContract>> GetSmartContracts()
+        public async Task<List<SmartContract>> GetSmartContracts()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var smartContracts = await this.smartContractDb.GetSmartContracts();
+                return smartContracts;
+            }
+            catch(Exception ex)
+            {
+                this.logger.LogException(ex, $"Error occured in {typeof(SmartContractManager)}.GetSmartContracts");
+                throw;
+            }
         }
 
         public Task<SmartContract> GetSmartContract(string smartContractAddress)

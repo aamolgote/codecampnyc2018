@@ -9,7 +9,7 @@ import { Response } from '@angular/http';
 @Injectable()
 export class SmartContractService {
     private baseUrl: string;
-    constructor( @Inject(APP_CONFIG) private config: IAppConfig, private http: HttpClient) {
+    constructor(private http: HttpClient, @Inject(APP_CONFIG) private config: IAppConfig) {
         this.baseUrl = config.apiEndpointBaseUrl;
     }
 
@@ -25,18 +25,18 @@ export class SmartContractService {
             );
     }
 
-    
+
     getSmartContracts(): Observable<SmartContract[]> {
+        console.log("GetSmartContracts Service.....");
         let apiUrl = this.baseUrl + "api/smartcontracts";
         return this.http.get<SmartContract[]>(apiUrl)
             .pipe(
-            map((res: Response) => {
-                let smartContracts = res.json();
-                return smartContracts;
-            }),
-            catchError(this.handleError('deployContract'))
+            catchError(this.handleError('', []))
             );
+
     }
+
+
 
     getDeployedInstanceListing(smartContractId: number): Observable<SmartContractInstance> {
         let apiUrl = this.baseUrl + "api/smartcontract/instances?smartContractId" + smartContractId;
@@ -62,22 +62,22 @@ export class SmartContractService {
             );
     }
 
-    createSmartContract(smartcontract: SmartContract, filetoBeUploaded: File) : Observable<SmartContract>{
+    createSmartContract(smartcontract: SmartContract, filetoBeUploaded: File): Observable<SmartContract> {
         let apiUrl = this.baseUrl + "api/smartcontract";
-        let formData : FormData = new FormData();
+        let formData: FormData = new FormData();
         formData.append("smartContractModelData", JSON.stringify(smartcontract));
 
-        if (filetoBeUploaded && filetoBeUploaded.name){
+        if (filetoBeUploaded && filetoBeUploaded.name) {
             formData.append('uploadFile', filetoBeUploaded, filetoBeUploaded.name);
         }
 
         return this.http.post<SmartContract>(apiUrl, formData)
             .pipe(
-                map((res: Response) =>{
-                    let smartContract = res.json();
-                    return smartContract;
-                }),
-                catchError(this.handleError('createSmartContract'))
+            map((res: Response) => {
+                let smartContract = res.json();
+                return smartContract;
+            }),
+            catchError(this.handleError('createSmartContract'))
 
             )
     }

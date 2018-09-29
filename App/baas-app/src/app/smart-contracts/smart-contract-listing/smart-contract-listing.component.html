@@ -15,7 +15,7 @@
                             <ul>
                                 <li *ngFor="let contract of smartContracts">
                                     <div class="contract-container">
-                                        <img src="" style="max-height: 200px;max-width: 200px">
+                                        <img src="{{contract.imagePath}}" style="max-height: 200px;max-width: 200px">
                                         <div class="contract-name">
                                             <a href="javascript:void(0)" class="card-title">
                                                 {{contract.name}}

@@ -110,6 +110,7 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\SmartContractController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -138,6 +139,10 @@
     <ProjectReference Include="..\BAAS.Db\BAAS.Db.csproj">
       <Project>{f6db7da0-0f3c-47b2-b159-c0721e8a7460}</Project>
       <Name>BAAS.Db</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BAAS.Logger\BAAS.Logger.csproj">
+      <Project>{647a33f6-455d-4e72-af70-8bdc2a41a02b}</Project>
+      <Name>BAAS.Logger</Name>
     </ProjectReference>
     <ProjectReference Include="..\BAAS.Models\BAAS.Models.csproj">
       <Project>{62dfab48-6825-4502-8289-8d19679af5df}</Project>

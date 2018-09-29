@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div style="margin-top:20px;">
+                <h5>
+                    New Smart contract
+                </h5>
+                <form #smartContractForm="ngForm" (ngSubmit)="onSubmit(smartContractForm)">
+                    <div class="form-group">
+                        <label for="name">Smart Contract Display Name</label>
+                        <input type="text" class="form-control" id="name" required [(ngModel)]="smartContract.Name" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="creator">Creator</label>
+                        <select class="form-control" required [(ngModel)]="smartContract.createdByUserLoginId" name="createdByUserLoginId">
+                            <option *ngFor="let account of accounts" [ngValue]="account.userLoginId">
+                                {{account.userLoginId}} - {{account.address}}
+                            </option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom:10px">
+                        <file-drag-drop-upload [allowedExtensions]="['json']" (filesDraggedDroppedEmitter)="onFileUploaded($event)">
+                        </file-drag-drop-upload>
+                    </div>
+                    <div>
+                        <a href="javascript:void(0);" (click)="displayAdvanceOption = !displayAdvanceOption">
+                            Advance (ABI and Byte code)
+                        </a>
+                    </div>
+                    <div [hidden]="displayAdvanceOption" class="advance-option">
+                        <div class="form-group">
+                            <label for="abi">Abi</label>
+                            <textarea type="text" class="form-control" id="abi" [(ngModel)]="smartContract.abi" name="abi" cols="40" rows="3">
+                            </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="byteCode">Byte code</label>
+                            <textarea type="text" class="form-control" id="byteCode" [(ngModel)]="smartContract.byteCode" name="byteCode" cols="40" rows="3">
+                                </textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success float-right" [disabled]="!smartContractForm.form.valid">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

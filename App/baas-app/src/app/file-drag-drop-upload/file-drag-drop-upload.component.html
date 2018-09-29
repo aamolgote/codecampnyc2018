@@ -1,0 +1,22 @@
+<div class="form-group">
+    <label for="name">Upload Contract (JSON file)</label>
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" id="customFile" name="customFile" (change)="fileUploaded($event)">
+        <label class="custom-file-label" for="customFile">
+            <span *ngIf="uploadedFileName">{{uploadedFileName}}</span>
+        </label>
+    </div>
+</div>
+<div style="margin-bottom: 10px">
+    <span>OR</span>
+</div>
+<div class="dropzone" (dragover)="onFileUploadDragOver($event)" (dragleave)="onFileUploadDragLeave($event)" (drop)="onFileUploadDrop($event)">
+    <div class="text-wrapper">
+        <div class="centered">
+            Drag and drop your JSON file here....
+        </div>
+    </div>
+</div>
+<div *ngIf="uploadedFileName">
+    <span>Uploaded file: {{uploadedFileName}}</span>
+</div>

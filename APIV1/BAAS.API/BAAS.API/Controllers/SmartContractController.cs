@@ -1,4 +1,6 @@
 ﻿using BAAS.Core.Interfaces;
+using BAAS.Db;
+using BAAS.Logger;
 using BAAS.Models;
 using BAAS.Nethereum;
 using Newtonsoft.Json;
@@ -20,9 +22,13 @@ namespace BAAS.API.Controllers
         private ISmartContractManager smartContractManager;
         private ISmartContractDb smartContractDb;
         private IAccountDb accountDb;
+        private IBlockchainLogger logger;
         public SmartContractController()
         {
-            this.smartContractManager = new SmartContractManager(this.smartContractDb, this.accountDb);
+            this.smartContractDb = new SmartContractDb();
+            this.accountDb = new AccountDb();
+            this.logger = new BlockchainLogger();
+            this.smartContractManager = new SmartContractManager(this.smartContractDb, this.accountDb, this.logger);
         }
         [Route("api/smartcontract/payload")]
         [HttpPost]
