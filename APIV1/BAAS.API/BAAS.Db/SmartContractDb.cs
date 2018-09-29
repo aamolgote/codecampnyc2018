@@ -18,6 +18,8 @@ namespace BAAS.Db
 
             using (SqlConnection conn = new SqlConnection(DbConfiguration.ConnectionString))
             {
+                conn.Open();
+                var transaction = conn.BeginTransaction();
                 SqlCommand sqlcmd = new SqlCommand(StoredProcedures.InsertSmartContract, conn);
                 sqlcmd.CommandType = System.Data.CommandType.StoredProcedure;
                 sqlcmd.Parameters.Add(new SqlParameter()
@@ -44,75 +46,71 @@ namespace BAAS.Db
                     SqlDbType = System.Data.SqlDbType.VarChar,
                     Value = smartContract.CreatedByUserLoginId
                 });
-                conn.Open();
-                using (var transaction = conn.BeginTransaction())
+               
+                try
                 {
-                    try
+                    sqlcmd.Connection = conn;
+                    sqlcmd.Transaction = transaction;
+                    var reader = await sqlcmd.ExecuteReaderAsync();
+                    var result = reader.Read();
+                    if (result)
                     {
-                        sqlcmd.Connection = conn;
-                        using (var reader = await sqlcmd.ExecuteReaderAsync())
-                        {
-                            var result = reader.Read();
-                            if (result)
-                            {
-                                mutatedSmartContract.SmartContractId = Convert.ToInt32(reader["SmartContractId"].ToString());
-                                mutatedSmartContract.Name = reader["Name"]?.ToString();
-                                mutatedSmartContract.Abi = reader["Abi"]?.ToString();
-                                mutatedSmartContract.ByteCode = reader["ByteCode"]?.ToString();
-                                mutatedSmartContract.CreatedByUserLoginId = reader["CreatedByUserLoginId"]?.ToString();
-                                mutatedSmartContract.CreatedDatetime = string.IsNullOrEmpty(reader["CreatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["CreatedDatetime"]);
-                                mutatedSmartContract.UpdatedDatetime = string.IsNullOrEmpty(reader["UpdatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["UpdatedDatetime"]);
-                            }
-                        }
-
-                        foreach (var smartContractFunction in smartContractFunctions)
-                        {
-                            SqlCommand sqlCmdSmartContractFunction = new SqlCommand(StoredProcedures.InsertSmartContractFunction, conn);
-                            sqlCmdSmartContractFunction.CommandType = CommandType.StoredProcedure;
-                            sqlCmdSmartContractFunction.Transaction = transaction;
-
-                            sqlCmdSmartContractFunction.Parameters.Add(new SqlParameter()
-                            {
-                                ParameterName = "@smartContractId",
-                                SqlDbType = System.Data.SqlDbType.Int,
-                                Value = mutatedSmartContract.SmartContractId
-                            });
-
-                            sqlCmdSmartContractFunction.Parameters.Add(new SqlParameter()
-                            {
-                                ParameterName = "@funtionName",
-                                SqlDbType = System.Data.SqlDbType.VarChar,
-                                Value = smartContractFunction.FunctionName
-                            });
-
-                            sqlCmdSmartContractFunction.Parameters.Add(new SqlParameter()
-                            {
-                                ParameterName = "@functionType",
-                                SqlDbType = System.Data.SqlDbType.VarChar,
-                                Value = smartContractFunction.FunctionType
-                            });
-
-                            sqlCmdSmartContractFunction.Parameters.Add(new SqlParameter()
-                            {
-                                ParameterName = "@sequence",
-                                SqlDbType = System.Data.SqlDbType.Int,
-                                Value = smartContractFunction.Sequence
-                            });
-                            var returnValue = await sqlCmdSmartContractFunction.ExecuteReaderAsync();
-                        }
-                        transaction.Commit();
-                        conn.Close();
+                        mutatedSmartContract = new SmartContract();
+                        mutatedSmartContract.SmartContractId = Convert.ToInt32(reader["SmartContractId"].ToString());
+                        mutatedSmartContract.Name = reader["Name"]?.ToString();
+                        mutatedSmartContract.Abi = reader["Abi"]?.ToString();
+                        mutatedSmartContract.ByteCode = reader["ByteCode"]?.ToString();
+                        mutatedSmartContract.CreatedByUserLoginId = reader["CreatedByUserLoginId"]?.ToString();
+                        mutatedSmartContract.CreatedDatetime = string.IsNullOrEmpty(reader["CreatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["CreatedDatetime"]);
+                        mutatedSmartContract.UpdatedDatetime = string.IsNullOrEmpty(reader["UpdatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["UpdatedDatetime"]);
                     }
-                    catch (Exception ex)
+                    reader.Close();
+
+                    foreach (var smartContractFunction in smartContractFunctions)
                     {
-                        transaction.Rollback();
-                        throw ex;
+                        SqlCommand sqlCmdSmartContractFunction = new SqlCommand(StoredProcedures.InsertSmartContractFunction, conn);
+                        sqlCmdSmartContractFunction.CommandType = CommandType.StoredProcedure;
+                        sqlCmdSmartContractFunction.Transaction = transaction;
+
+                        sqlCmdSmartContractFunction.Parameters.Add(new SqlParameter()
+                        {
+                            ParameterName = "@smartContractId",
+                            SqlDbType = System.Data.SqlDbType.Int,
+                            Value = mutatedSmartContract.SmartContractId
+                        });
+
+                        sqlCmdSmartContractFunction.Parameters.Add(new SqlParameter()
+                        {
+                            ParameterName = "@functionName",
+                            SqlDbType = System.Data.SqlDbType.VarChar,
+                            Value = smartContractFunction.FunctionName
+                        });
+
+                        sqlCmdSmartContractFunction.Parameters.Add(new SqlParameter()
+                        {
+                            ParameterName = "@functionType",
+                            SqlDbType = System.Data.SqlDbType.VarChar,
+                            Value = smartContractFunction.FunctionType
+                        });
+
+                        sqlCmdSmartContractFunction.Parameters.Add(new SqlParameter()
+                        {
+                            ParameterName = "@sequence",
+                            SqlDbType = System.Data.SqlDbType.Int,
+                            Value = smartContractFunction.Sequence
+                        });
+                        var returnValue = await sqlCmdSmartContractFunction.ExecuteNonQueryAsync();
                     }
+                    transaction.Commit();
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
                 }
             }
             return mutatedSmartContract;
-
-
         }
 
         public Task<SmartContractDeployedInstanceItem> CreateSmartContractDeployedInstance(SmartContractDeployedInstanceItem smartContractDeployedInstanceItem)
@@ -165,7 +163,7 @@ namespace BAAS.Db
                     smartContract.CreatedDatetime = string.IsNullOrEmpty(reader["CreatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["CreatedDatetime"]);
                     smartContract.UpdatedDatetime = string.IsNullOrEmpty(reader["UpdatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["UpdatedDatetime"]);
                     smartContracts.Add(smartContract);
-                }    
+                }
             }
             return smartContracts;
         }

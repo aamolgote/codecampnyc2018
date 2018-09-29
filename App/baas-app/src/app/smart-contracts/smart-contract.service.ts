@@ -17,11 +17,11 @@ export class SmartContractService {
         let apiUrl = this.baseUrl + "api/smartcontract/deploy";
         return this.http.post<DeployedInstance>(apiUrl, smartContractToBeDeployed)
             .pipe(
-            map((res: Response) => {
-                let deployedInstance = res.json();
-                return deployedInstance;
-            }),
-            catchError(this.handleError('deployContract'))
+                map((res: Response) => {
+                    let deployedInstance = res.json();
+                    return deployedInstance;
+                }),
+                catchError(this.handleError('deployContract'))
             );
     }
 
@@ -31,7 +31,7 @@ export class SmartContractService {
         let apiUrl = this.baseUrl + "api/smartcontracts";
         return this.http.get<SmartContract[]>(apiUrl)
             .pipe(
-            catchError(this.handleError('', []))
+                catchError(this.handleError('', []))
             );
 
     }
@@ -42,11 +42,11 @@ export class SmartContractService {
         let apiUrl = this.baseUrl + "api/smartcontract/instances?smartContractId" + smartContractId;
         return this.http.get<SmartContractInstance>(apiUrl)
             .pipe(
-            map((res: Response) => {
-                let smartContractInstances = res.json();
-                return smartContractInstances;
-            }),
-            catchError(this.handleError('getDeployedInstanceListing'))
+                map((res: Response) => {
+                    let smartContractInstances = res.json();
+                    return smartContractInstances;
+                }),
+                catchError(this.handleError('getDeployedInstanceListing'))
             );
     }
 
@@ -54,11 +54,11 @@ export class SmartContractService {
         let apiUrl = this.baseUrl + "api/smartcontract/instance/transactions?smartContractDeployedInstanceId" + smartContractDeployedInstanceId;
         return this.http.get<SmartContractTransaction[]>(apiUrl)
             .pipe(
-            map((res: Response) => {
-                let smartContractDeployedInstanceTransactions = res.json();
-                return smartContractDeployedInstanceTransactions;
-            }),
-            catchError(this.handleError('getSmartContractDeployedInstanceTransactions'))
+                map((res: Response) => {
+                    let smartContractDeployedInstanceTransactions = res.json();
+                    return smartContractDeployedInstanceTransactions;
+                }),
+                catchError(this.handleError('getSmartContractDeployedInstanceTransactions'))
             );
     }
 
@@ -70,16 +70,10 @@ export class SmartContractService {
         if (filetoBeUploaded && filetoBeUploaded.name) {
             formData.append('uploadFile', filetoBeUploaded, filetoBeUploaded.name);
         }
-
         return this.http.post<SmartContract>(apiUrl, formData)
             .pipe(
-            map((res: Response) => {
-                let smartContract = res.json();
-                return smartContract;
-            }),
-            catchError(this.handleError('createSmartContract'))
-
-            )
+                catchError(this.handleError('an error occured while invoking createSmartContract', null))
+            );
     }
 
     private handleError<T>(operation = 'operation', result?: T) {

@@ -90,7 +90,7 @@ namespace BAAS.API.Controllers
                         }
                     }
                 }
-                var smartContract = this.smartContractManager.CreateSmartContract(smartContractPayload);
+                var smartContract = await this.smartContractManager.CreateSmartContract(smartContractPayload);
                 return Ok(smartContract);
             }
             catch (Exception ex)

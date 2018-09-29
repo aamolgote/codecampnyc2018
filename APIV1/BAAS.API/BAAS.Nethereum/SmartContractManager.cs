@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BAAS.Models;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace BAAS.Nethereum
 {
@@ -20,9 +21,39 @@ namespace BAAS.Nethereum
             this.accountDb = accountDb;
             this.logger = logger;
         }
-        public Task<SmartContract> CreateSmartContract(SmartContract smartContract)
+        public async Task<SmartContract> CreateSmartContract(SmartContract smartContract)
         {
-            return null;
+            try
+            {
+                var smartContractAbiFunctions = JsonConvert.DeserializeObject<List<SmartContractAbi>>(smartContract.Abi);
+                List<SmartContractFunction> smartContractFunctions = null;
+                if (smartContractAbiFunctions != null && smartContractAbiFunctions.Count > 0)
+                {
+                    smartContractFunctions = new List<SmartContractFunction>();
+                    int sequence = 1;
+                    foreach(var smartContractAbiFunction in smartContractAbiFunctions)
+                    {
+                        if (smartContractAbiFunction.Type.ToLower() != "constructor" 
+                            && smartContractAbiFunction.Type.ToLower() != "event")
+                        {
+                            SmartContractFunction smartContractFunction = new SmartContractFunction()
+                            {
+                                FunctionName = smartContractAbiFunction.Name,
+                                FunctionType = smartContractAbiFunction.Type,
+                                Sequence = sequence++
+                            };
+                            smartContractFunctions.Add(smartContractFunction);
+                        }
+                    }
+                }
+                var smartContractUpdated = await this.smartContractDb.Create(smartContract, smartContractFunctions);
+                return smartContractUpdated;
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogException(ex, $"Error occured in {typeof(SmartContractManager)}.CreateSmartContract");
+                throw;
+            }
         }
 
         public async Task<List<SmartContract>> GetSmartContracts()
