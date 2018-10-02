@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { TabsModule } from 'ngx-bootstrap';
+import { TabsModule, PaginationModule, CollapseModule } from 'ngx-bootstrap';
 import { AppComponent } from './app.component';
 import { APP_CONFIG, AppConfig } from './app.config';
 import { SmartContractListingComponent } from './smart-contracts/smart-contract-listing/smart-contract-listing.component';
@@ -61,6 +61,8 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     TabsModule.forRoot(),
+    PaginationModule.forRoot(),
+    CollapseModule.forRoot(),
     RouterModule.forRoot(appRoutes, { enableTracing: false, useHash: true })
   ],
   providers: [,

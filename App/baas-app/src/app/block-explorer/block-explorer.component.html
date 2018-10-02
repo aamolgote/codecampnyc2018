@@ -1,0 +1,121 @@
+<div class="container" *ngIf="dltBlocks && dltBlocks.length">
+    <div class="row">
+        <div class="col-md-8">
+            <h3>
+                <i class="fa fa-cubes" aria-hidden="true"></i>
+                Most Recent blocks in distributed ledger
+            </h3>
+        </div>
+        <div class="col-md-4">
+            <div class="checkbox float-right" style="padding-top: 10px">
+                <label>
+                    <input type="checkbox" [(ngModel)]="autoRefresh" (change)="onChange($event)" /> Auto Refresh
+                </label>
+            </div>
+        </div>
+    </div>
+    <input class="card card-block card-header mb-3 col-md-12" placeholder="Search" [(ngModel)]="selected">
+    <div class="row">
+        <div class="col-xs-12 col-12">
+            <div class="content-wrapper">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th># Block</th>
+                            <th>Hash</th>
+                            <th>Size</th>
+                            <th>Datetime</th>
+                            <th># Transactions</th>
+                            <th>Gas Used</th>
+                            <th>Gas Limit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-template ngFor let-dltBlock [ngForOf]="pagedDltBlocks">
+                            <!--| searchfilter: 'blockHash' : selected-->
+                            <tr>
+                                <td>
+                                    <a href="javascript:void(0)" (click)="dltBlock.isCollapsed = !dltBlock.isCollapsed"
+                                        *ngIf="dltBlock.dltTransactions && dltBlock.dltTransactions.length">
+                                        {{dltBlock.blockNumber}}
+                                    </a>
+                                    <span *ngIf="!(dltBlock.dltTransactions && dltBlock.dltTransactions.length)">
+                                        {{dltBlock.blockNumber}}
+                                    </span>
+                                </td>
+                                <td>{{dltBlock.size}}</td>
+                                <td>{{dltBlock.blockDatetime}}</td>
+                                <td>{{dltBlock.transactionCount}}</td>
+                                <td>{{dltBlock.gasUSed}}</td>
+                                <td>{{dltBlock.gasLimit}}</td>
+                            </tr>
+                            <tr *ngIf="dltBlock.dltTransactions && dltBlock.dltTransactions.length" [hidden]="dltBlock.isCollapsed">
+                                <td></td>
+                                <td colspan="6">
+                                    <table [collapse]="dltBlock.isCollapsed">
+                                        <thead>
+                                            <tr>
+                                                <th>Hash</th>
+                                                <th>Contract Name</th>
+                                                <th>User</th>
+                                                <th>Function</th>
+                                                <th>Parameters</th>
+                                                <th>Datetime</th>
+                                                <th>Gas</th>
+                                                <th>Gas Price</th>
+                                                <th>Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr * ngFor="let dlttransaction of dltBlock.dltTransactions">
+                                                <!-- | searchfilter: 'transactionHash' : "selected" -->
+                                                <td>
+                                                    <textarea>
+                                                        {{dlttransaction.transactionHash}}
+                                                    </textarea>
+                                                </td>
+                                                <td>{{dltTransaction.name}}</td>
+                                                <td>{{dltTransaction.transactionUser}}</td>
+                                                <td>{{dltTransaction.smartContractFunction}}</td>
+                                                <td>
+                                                    <table *ngIf="dltTransaction.smartContractFunctionParameterNames && dltTransaction.smartContractFunctionParameterNames.length">
+                                                        <tr>
+                                                            <td>
+                                                                Name
+                                                            </td>
+                                                            <td>
+                                                                Value
+                                                            </td>
+                                                        </tr>
+                                                        <tr *ngFor="let elem of dlttransaction.smartContractFunctionParameterNames">
+                                                            <td>{{elem.paramName}}</td>
+                                                            <td>{{elem.paramValue}}</td>
+                                                        </tr>
+                                                    </table>
+                                                    <span *ngIf="!(dltTransaction.smartContractFunctionParameterNames && dltTransaction.smartContractFunctionParameterNames.length)">
+                                                        No parameters.
+                                                    </span>
+                                                </td>
+                                                <td>{{dltTransaction.updatedDatetime}}</td>
+                                                <td>{{dltTransaction.gas}}</td>
+                                                <td>{{dltTransaction.gasPrice}}</td>
+                                                <td>{{dltTransaction.value}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-12">
+            <div class="pull-right">
+                <pagination [totalItems]="dltBlocks.length" (pageChanged)="pageChanged($event)"></pagination>
+            </div>
+        </div>
+    </div>
+</div>
