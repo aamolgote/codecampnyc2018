@@ -13,8 +13,17 @@ namespace BAAS.Db
         public const string InsertSmartContract = "InsertSmartContract";
         public const string InsertSmartContractFunction = "InsertSmartContractFunction";
         public const string GetSmartContracts = "GetSmartContracts";
-        //public const string GetUserDltAccounts = "GetUserDltAccounts";
-        //public const string GetUserDltAccounts = "GetUserDltAccounts";
+        public const string GetSmartContractDeployedInstances = "GetSmartContractDeployedInstances";
+        public const string GetSmartContract = "GetSmartContract";
+        public const string GetSmartContractFunctions = "GetSmartContractFunctions";
+
+        public const string InsertSmartContractDeployedInstance = "InsertSmartContractDeployedInstance";
+        public const string GetSmartContractDeployedInstance = "GetSmartContractDeployedInstance";
+        public const string InsertSmartContractTransaction = "InsertSmartContractTransaction";
+        public const string GetSmartContractTransactionsForDeployedInstance = "GetSmartContractTransactionsForDeployedInstance";
+        //public const string GetSmartContracts = "GetSmartContracts";
+        //public const string GetSmartContractDeployedInstances = "GetSmartContractDeployedInstances";
+        //public const string GetSmartContract = "GetSmartContract";
 
     }
 }

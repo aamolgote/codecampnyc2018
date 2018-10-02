@@ -8,7 +8,8 @@
                 <form #smartContractForm="ngForm" (ngSubmit)="onSubmit(smartContractForm)">
                     <div class="form-group">
                         <label for="name">Smart Contract Display Name</label>
-                        <input type="text" class="form-control" id="name" required [(ngModel)]="smartContract.Name" name="name">
+                        <input type="text" class="form-control" id="name" required [(ngModel)]="smartContract.Name"
+                            name="name">
                     </div>
                     <div class="form-group">
                         <label for="creator">Creator</label>
@@ -30,16 +31,19 @@
                     <div [hidden]="displayAdvanceOption" class="advance-option">
                         <div class="form-group">
                             <label for="abi">Abi</label>
-                            <textarea type="text" class="form-control" id="abi" [(ngModel)]="smartContract.abi" name="abi" cols="40" rows="3">
-                            </textarea>
+                            <textarea type="text" class="form-control" id="abi" [(ngModel)]="smartContract.abi" name="abi"
+                                cols="40" rows="3">
+                           </textarea>
                         </div>
                         <div class="form-group">
                             <label for="byteCode">Byte code</label>
-                            <textarea type="text" class="form-control" id="byteCode" [(ngModel)]="smartContract.byteCode" name="byteCode" cols="40" rows="3">
+                            <textarea type="text" class="form-control" id="byteCode" [(ngModel)]="smartContract.byteCode"
+                                name="byteCode" cols="40" rows="3">
                                 </textarea>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-success float-right" [disabled]="!smartContractForm.form.valid">Submit</button>
+                    <a style="margin-right: 10px;" href="javascript:void(0);" class="btn btn-light float-right" (click)="navigateBack()">Back</a>
                 </form>
             </div>
         </div>

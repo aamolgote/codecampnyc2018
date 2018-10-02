@@ -17,7 +17,7 @@ namespace BAAS.Core.Interfaces
 
         Task<SmartContract> GetSmartContract(int smartContractId);
 
-        Task<List<SmartContractDeployedInstance>> GetSmartContractDeployedInstances(int smartContractId);
+        Task<SmartContractDeployedInstance> GetSmartContractDeployedInstances(int smartContractId);
 
         Task<SmartContractDeployedInstanceItem> CreateSmartContractDeployedInstance(SmartContractDeployedInstanceItem smartContractDeployedInstanceItem);
 

@@ -16,7 +16,8 @@
     border: 1px solid #dee2e6;
 }
 
-.smart-contract-listing ul{
+.smart-contract-listing-items ul{
+    padding-inline-start: 30px;
     list-style-type: none;
 }
 li{

@@ -17,7 +17,6 @@ export class AccountManagementService {
   }
 
   getUserAccounts(): Observable<UserDltAccount[]> {
-    console.log("GetSmartContracts Service.....");
     let apiUrl = this.baseUrl + "api/useraccounts";
     return this.http.get<UserDltAccount[]>(apiUrl)
       .pipe(

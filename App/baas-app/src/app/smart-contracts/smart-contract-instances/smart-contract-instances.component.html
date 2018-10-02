@@ -1,0 +1,62 @@
+<div class="container" *ngIf="deployedInstance" style="margin-top: 20px">
+    <div class="row" style="border-bottom: 1px solid #dedede">
+        <div class="col-md-8">
+            <h5>
+                <i class="fa fa-cogs" aria-hidden="true"></i>
+                Deployed Instances
+            </h5>
+        </div>
+    </div>
+    <div class="row" *ngIf="deployedInstance" style="margin-top: 20px;">
+        <div class="col-md-4">
+            <span>
+                <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                Name: {{deployedInstance.smartContract.name}}
+            </span>
+        </div>
+        <div class="col-md-4">
+            <span>
+                <i class="fa fa-user" aria-hidden="true"></i>
+                Created by: {{deployedInstance.smartContract.createdByUserLoginId}}
+            </span>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary float-right" (click)="navigateToDeployContract()">
+                <i class="fa fa-plus" aria-hidden="true"></i> Deploy
+            </button>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 30px" *ngIf="deployedInstance && deployedInstance.smartContractDeployedInstanceItems && deployedInstance.smartContractDeployedInstanceItems.length">
+        <div class="col-xs-12 col-12">
+            <div class="content-wrapper" style="border: 1px solid #dedede">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Display Name</th>
+                            <th>Deployed Address</th>
+                            <th>Deployed By</th>
+                            <th>Initial Data</th>
+                            <th>State</th>
+                            <th>Datetime</th>
+                            <th>Action</th>
+                            <th></th>
+                        </tr>
+                        <tr *ngFor="let instanceItem of pagedSmartContractInstanceItems">
+                            <td>{{instanceItem.deployedInstanceDiplayName}}</td>
+                            <td>{{instanceItem.deployedAddress}}</td>
+                            <td>{{instanceItem.deployByUserLoginId}}</td>
+                            <td>{{instanceItem.initialData}}</td>
+                            <td>TBD</td>
+                            <td>{{instanceItem.createdDatetime}}</td>
+                            <td>
+                                <a href="javascript:void(0)" [routerLink]="['./smartcontract/instance/deploy/', instanceItem.smartContractInstanceId]">
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

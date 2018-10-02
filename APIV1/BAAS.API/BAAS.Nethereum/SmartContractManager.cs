@@ -75,9 +75,18 @@ namespace BAAS.Nethereum
             throw new NotImplementedException();
         }
 
-        public Task<List<SmartContractDeployedInstance>> GetSmartContractDeployedInstances(int smartContractId)
+        public async Task<SmartContractDeployedInstance> GetSmartContractDeployedInstances(int smartContractId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var smartContractDeployedInstance = await this.smartContractDb.GetSmartContractDeployedInstances(smartContractId);
+                return smartContractDeployedInstance;
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogException(ex, $"Error occured in {typeof(SmartContractManager)}.GetSmartContracts");
+                throw;
+            }
         }
 
         public Task<List<SmartContractTransaction>> GetSmartContractTransactionsForDeployedInstance(int smartContractDeployedInstanceId)

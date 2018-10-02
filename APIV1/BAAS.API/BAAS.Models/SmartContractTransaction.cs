@@ -18,7 +18,7 @@ namespace BAAS.Models
 
         public string SmartContractFunction { get; set; }
 
-        public string SmartContractFunctionParamters { get; set; }
+        public string SmartContractFunctionParameters { get; set; }
 
         public List<string> SmartContractFunctionParametersList { get; set; }
 

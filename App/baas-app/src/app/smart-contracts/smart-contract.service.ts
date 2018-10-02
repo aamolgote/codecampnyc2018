@@ -39,14 +39,10 @@ export class SmartContractService {
 
 
     getDeployedInstanceListing(smartContractId: number): Observable<SmartContractInstance> {
-        let apiUrl = this.baseUrl + "api/smartcontract/instances?smartContractId" + smartContractId;
+        let apiUrl = this.baseUrl + "api/smartcontract/instances?smartContractId=" + smartContractId;
         return this.http.get<SmartContractInstance>(apiUrl)
             .pipe(
-                map((res: Response) => {
-                    let smartContractInstances = res.json();
-                    return smartContractInstances;
-                }),
-                catchError(this.handleError('getDeployedInstanceListing'))
+                catchError(this.handleError('getDeployedInstanceListing', null))
             );
     }
 

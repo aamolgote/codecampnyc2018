@@ -97,7 +97,7 @@ export class SmartContractTransaction {
 }
 
 export class SmartContract {
-    contractId: number;
+    smartContractId: number;
     abi: string;
     byteCode: string;
     name: string;

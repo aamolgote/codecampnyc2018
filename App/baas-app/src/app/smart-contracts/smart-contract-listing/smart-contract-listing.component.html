@@ -5,7 +5,7 @@
                 <tab heading="Smart Contracts" id="tab1">
                     <div class="smart-contract-listing">
                         <div class="row">
-                            <div class="col-md-12" style="padding: 10px 25px 5px 10px;">
+                            <div class="col-md-12" style="padding: 10px 25px 20px 10px;">
                                 <button class="btn btn-primary float-md-right" (click)="createContract()">
                                     <i class="fa fa-plus" aria-hidden="true"></i> Add Contract
                                 </button>
@@ -17,7 +17,9 @@
                                     <div class="contract-container">
                                         <img src="{{contract.imagePath}}" style="max-height: 200px;max-width: 200px">
                                         <div class="contract-name">
-                                            <a href="javascript:void(0)" class="card-title">
+                                            <a href="javascript:void(0)" class="card-title" 
+                                            [routerLink]="['./smartcontract/instances', contract.smartContractId]"
+                                                routerLinkActive="active">
                                                 {{contract.name}}
                                             </a>
                                         </div>

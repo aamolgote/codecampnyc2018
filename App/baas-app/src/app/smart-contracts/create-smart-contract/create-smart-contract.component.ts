@@ -36,10 +36,16 @@ export class CreateSmartContractComponent implements OnInit {
       .subscribe((smartContract: SmartContract) => {
         smartContractForm.form.reset();
         console.log("Navigate to root..");
-        this.router.navigate['/'];
+        this.router.navigate(['/']);
         console.log("Navigate to root done.....");
 
       });
+  }
+
+  navigateBack() {
+    console.log("Navigate to root..");
+    this.router.navigate(['/']);
+    console.log("Navigate to root done.....");
   }
 
   onFileUploaded(filesList: File[]) {

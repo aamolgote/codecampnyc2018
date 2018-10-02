@@ -46,7 +46,7 @@ namespace BAAS.Db
                     SqlDbType = System.Data.SqlDbType.VarChar,
                     Value = smartContract.CreatedByUserLoginId
                 });
-               
+
                 try
                 {
                     sqlcmd.Connection = conn;
@@ -113,19 +113,176 @@ namespace BAAS.Db
             return mutatedSmartContract;
         }
 
-        public Task<SmartContractDeployedInstanceItem> CreateSmartContractDeployedInstance(SmartContractDeployedInstanceItem smartContractDeployedInstanceItem)
+        public async Task<SmartContractDeployedInstanceItem> CreateSmartContractDeployedInstance(SmartContractDeployedInstanceItem smartContractDeployedInstanceItem)
         {
-            throw new NotImplementedException();
+            SmartContractDeployedInstanceItem mutatedDeployedInstanceItem = null;
+            using (SqlConnection conn = new SqlConnection(DbConfiguration.ConnectionString))
+            {
+                SqlCommand sqlcmd = new SqlCommand(StoredProcedures.InsertSmartContractDeployedInstance, conn);
+                sqlcmd.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@smartContractId",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = smartContractDeployedInstanceItem.SmartContractId
+                });
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@deployedAddress",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = smartContractDeployedInstanceItem.DeployedAddress
+                });
+
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@initialData",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = smartContractDeployedInstanceItem.InitialData
+                });
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@deployByUserLoginId",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = smartContractDeployedInstanceItem.DeployByUserLoginId
+                });
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@deployedInstanceDisplayName",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = smartContractDeployedInstanceItem.DeployedInstanceDisplayName
+                });
+                conn.Open();
+                var reader = await sqlcmd.ExecuteReaderAsync();
+                if (reader.Read())
+                {
+                    mutatedDeployedInstanceItem = new SmartContractDeployedInstanceItem();
+                    mutatedDeployedInstanceItem.SmartContractId = Convert.ToInt32(reader["SmartContractId"]);
+                    mutatedDeployedInstanceItem.SmartContractInstanceId = Convert.ToInt32(reader["SmartContractInstanceId"]);
+                    mutatedDeployedInstanceItem.DeployedAddress = reader["DeployedAddress"]?.ToString();
+                    mutatedDeployedInstanceItem.DeployedInstanceDisplayName = reader["DeployedInstanceDisplayName"]?.ToString();
+                    mutatedDeployedInstanceItem.InitialData = reader["InitialData"]?.ToString();
+                    mutatedDeployedInstanceItem.DeployByUserLoginId = reader["DeployByUserLoginId"]?.ToString();
+                    mutatedDeployedInstanceItem.CreatedDatetime = string.IsNullOrEmpty(reader["CreatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["CreatedDatetime"]);
+                    mutatedDeployedInstanceItem.UpdatedDatetime = string.IsNullOrEmpty(reader["UpdatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["UpdatedDatetime"]);
+                }
+                return mutatedDeployedInstanceItem;
+            }
+
         }
 
-        public Task<SmartContractTransaction> CreateSmartContractTransaction(SmartContractTransaction smartContractTransaction)
+        public async Task<SmartContractTransaction> CreateSmartContractTransaction(SmartContractTransaction smartContractTransaction)
         {
-            throw new NotImplementedException();
+            SmartContractTransaction mutatedSmartContractTransaction = null;
+            using (SqlConnection conn = new SqlConnection(DbConfiguration.ConnectionString))
+            {
+                SqlCommand sqlcmd = new SqlCommand(StoredProcedures.InsertSmartContractTransaction, conn);
+                sqlcmd.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@smartContractDeployedInstanceId",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = smartContractTransaction.SmartContractDeployedInstanceId
+                });
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@transactionHash",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = smartContractTransaction.TransactionHash
+                });
+
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@transactionUser",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = smartContractTransaction.TransactionUser
+                });
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@smartContractFunction",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = smartContractTransaction.SmartContractFunction
+                });
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@smartContractFunctionParameters",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = smartContractTransaction.SmartContractFunctionParameters
+                });
+                conn.Open();
+                var reader = await sqlcmd.ExecuteReaderAsync();
+                if (reader.Read())
+                {
+                    mutatedSmartContractTransaction = new SmartContractTransaction();
+                    mutatedSmartContractTransaction.SmartContractTransactionId = Convert.ToInt32(reader["SmartContractTransactionId"]);
+                    mutatedSmartContractTransaction.SmartContractDeployedInstanceId = Convert.ToInt32(reader["SmartContractDeployedInstanceId"]);
+                    mutatedSmartContractTransaction.TransactionUser = reader["TransactionUser"]?.ToString();
+                    mutatedSmartContractTransaction.SmartContractFunction = reader["SmartContractFunction"]?.ToString();
+                    mutatedSmartContractTransaction.SmartContractFunctionParameters = reader["SmartContractFunctionParameters"]?.ToString();
+                    mutatedSmartContractTransaction.CreatedDatetime = string.IsNullOrEmpty(reader["CreatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["CreatedDatetime"]);
+                    mutatedSmartContractTransaction.UpdatedDatetime = string.IsNullOrEmpty(reader["UpdatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["UpdatedDatetime"]);
+                }
+                return mutatedSmartContractTransaction;
+            }
         }
 
-        public Task<SmartContract> GetSmartContract(int smartContractId)
+        public async Task<SmartContract> GetSmartContract(int smartContractId)
         {
-            throw new NotImplementedException();
+            SmartContract smartContract = new SmartContract();
+            using (SqlConnection conn = new SqlConnection(DbConfiguration.ConnectionString))
+            {
+                SqlCommand sqlcmd = new SqlCommand(StoredProcedures.GetSmartContract, conn);
+                sqlcmd.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@smartContractId",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = smartContractId
+                });
+                conn.Open();
+                var reader = await sqlcmd.ExecuteReaderAsync();
+                while (reader.Read())
+                {
+                    smartContract.SmartContractId = Convert.ToInt32(reader["SmartContractId"]);
+                    smartContract.Name = reader["Name"]?.ToString();
+                    smartContract.Abi = reader["Abi"]?.ToString();
+                    smartContract.ByteCode = reader["ByteCode"]?.ToString();
+                    smartContract.CreatedByUserLoginId = reader["CreatedByUserLoginId"]?.ToString();
+                    smartContract.CreatedDatetime = string.IsNullOrEmpty(reader["CreatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["CreatedDatetime"]);
+                    smartContract.UpdatedDatetime = string.IsNullOrEmpty(reader["UpdatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["UpdatedDatetime"]);
+                }
+            }
+            smartContract.Functions = await this.GetSmartContractFunctions(smartContractId);
+            return smartContract;
+        }
+
+        public async Task<List<SmartContractFunction>> GetSmartContractFunctions(int smartContractId)
+        {
+            List<SmartContractFunction> smartContractFunctions = new List<SmartContractFunction>();
+            using (SqlConnection conn = new SqlConnection(DbConfiguration.ConnectionString))
+            {
+                SqlCommand sqlcmd = new SqlCommand(StoredProcedures.GetSmartContractFunctions, conn);
+                sqlcmd.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@smartContractId",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = smartContractId
+                });
+                conn.Open();
+                var reader = await sqlcmd.ExecuteReaderAsync();
+                while (reader.Read())
+                {
+                    SmartContractFunction smartContractFunction = new SmartContractFunction();
+                    smartContractFunction.SmartContractFunctionId = Convert.ToInt32(reader["SmartContractFunctionId"]);
+                    smartContractFunction.SmartContractId = Convert.ToInt32(reader["SmartContractId"]);
+                    smartContractFunction.FunctionName = reader["FunctionName"]?.ToString();
+                    smartContractFunction.FunctionType = reader["FunctionType"]?.ToString();
+                    smartContractFunction.Sequence = Convert.ToInt32(reader["Sequence"]);
+                    smartContractFunction.CreatedDatetime = string.IsNullOrEmpty(reader["CreatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["CreatedDatetime"]);
+                    smartContractFunction.UpdatedDatetime = string.IsNullOrEmpty(reader["UpdatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["UpdatedDatetime"]);
+                }
+            }
+            return smartContractFunctions;
         }
 
         public Task<SmartContract> GetSmartContract(string smartContractAddress)
@@ -133,14 +290,69 @@ namespace BAAS.Db
             throw new NotImplementedException();
         }
 
-        public Task<SmartContractDeployedInstanceItem> GetSmartContractDeployedInstance(int smartContractDeployedInstanceItemId)
+        public async Task<SmartContractDeployedInstanceItem> GetSmartContractDeployedInstance(int smartContractDeployedInstanceId)
         {
-            throw new NotImplementedException();
+            SmartContractDeployedInstanceItem smartContractDeployedInstanceItem = null;
+            using (SqlConnection conn = new SqlConnection(DbConfiguration.ConnectionString))
+            {
+                SqlCommand sqlcmd = new SqlCommand(StoredProcedures.GetSmartContractDeployedInstance, conn);
+                sqlcmd.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@smartContractDeployedInstanceId",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = smartContractDeployedInstanceId
+                });
+                conn.Open();
+                var reader = await sqlcmd.ExecuteReaderAsync();
+                while (reader.Read())
+                {
+                    smartContractDeployedInstanceItem = new SmartContractDeployedInstanceItem();
+                    smartContractDeployedInstanceItem.SmartContractInstanceId = Convert.ToInt32(reader["SmartContractInstanceId"]);
+                    smartContractDeployedInstanceItem.SmartContractId = Convert.ToInt32(reader["SmartContractId"]);
+                    smartContractDeployedInstanceItem.DeployByUserLoginId = reader["DeployByUserLoginId"]?.ToString();
+                    smartContractDeployedInstanceItem.DeployedAddress = reader["DeployedAddress"]?.ToString();
+                    smartContractDeployedInstanceItem.InitialData = reader["InitialData"]?.ToString();
+                    smartContractDeployedInstanceItem.DeployedInstanceDisplayName = reader["DeployedInstanceDisplayName"]?.ToString();
+                    smartContractDeployedInstanceItem.CreatedDatetime = string.IsNullOrEmpty(reader["CreatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["CreatedDatetime"]);
+                    smartContractDeployedInstanceItem.UpdatedDatetime = string.IsNullOrEmpty(reader["UpdatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["UpdatedDatetime"]);
+                }
+            }
+            return smartContractDeployedInstanceItem;
         }
 
-        public Task<List<SmartContractDeployedInstance>> GetSmartContractDeployedInstances(int smartContractId)
+        public async Task<SmartContractDeployedInstance> GetSmartContractDeployedInstances(int smartContractId)
         {
-            throw new NotImplementedException();
+            SmartContractDeployedInstance smartContractDeployedInstance = new SmartContractDeployedInstance();
+            smartContractDeployedInstance.SmartContract = await this.GetSmartContract(smartContractId);
+            using (SqlConnection conn = new SqlConnection(DbConfiguration.ConnectionString))
+            {
+                SqlCommand sqlcmd = new SqlCommand(StoredProcedures.GetSmartContractDeployedInstances, conn);
+                sqlcmd.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@smartContractId",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = smartContractId
+                });
+                conn.Open();
+                var reader = await sqlcmd.ExecuteReaderAsync();
+                smartContractDeployedInstance.SmartContractDeployedInstanceItems = new List<SmartContractDeployedInstanceItem>();
+                while (reader.Read())
+                {
+                    SmartContractDeployedInstanceItem smartContractDeployedInstanceItem = new SmartContractDeployedInstanceItem();
+                    smartContractDeployedInstanceItem.SmartContractInstanceId = Convert.ToInt32(reader["SmartContractInstanceId"]);
+                    smartContractDeployedInstanceItem.SmartContractId = Convert.ToInt32(reader["SmartContractId"]);
+                    smartContractDeployedInstanceItem.DeployByUserLoginId = reader["DeployByUserLoginId"]?.ToString();
+                    smartContractDeployedInstanceItem.DeployedAddress = reader["DeployedAddress"]?.ToString();
+                    smartContractDeployedInstanceItem.InitialData = reader["InitialData"]?.ToString();
+                    smartContractDeployedInstanceItem.DeployedInstanceDisplayName = reader["DeployedInstanceDisplayName"]?.ToString();
+                    smartContractDeployedInstanceItem.CreatedDatetime = string.IsNullOrEmpty(reader["CreatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["CreatedDatetime"]);
+                    smartContractDeployedInstanceItem.UpdatedDatetime = string.IsNullOrEmpty(reader["UpdatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["UpdatedDatetime"]);
+                    smartContractDeployedInstance.SmartContractDeployedInstanceItems.Add(smartContractDeployedInstanceItem);
+                }
+            }
+            return smartContractDeployedInstance;
         }
 
         public async Task<List<SmartContract>> GetSmartContracts()
@@ -168,9 +380,35 @@ namespace BAAS.Db
             return smartContracts;
         }
 
-        public Task<List<SmartContractTransaction>> GetSmartContractTransactionsForDeployedInstance(int smartContractDeployedInstanceId)
+        public async Task<List<SmartContractTransaction>> GetSmartContractTransactionsForDeployedInstance(int smartContractDeployedInstanceId)
         {
-            throw new NotImplementedException();
+            List<SmartContractTransaction> smartContractTransactions = new List<SmartContractTransaction>();
+            using (SqlConnection conn = new SqlConnection(DbConfiguration.ConnectionString))
+            {
+                SqlCommand sqlcmd = new SqlCommand(StoredProcedures.GetSmartContractTransactionsForDeployedInstance, conn);
+                sqlcmd.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@smartContractDeployedInstanceId",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = smartContractDeployedInstanceId
+                });
+                conn.Open();
+                var reader = await sqlcmd.ExecuteReaderAsync();
+                while (reader.Read())
+                {
+                    var smartContractTransaction = new SmartContractTransaction();
+                    smartContractTransaction.SmartContractTransactionId = Convert.ToInt32(reader["SmartContractTransactionId"]);
+                    smartContractTransaction.SmartContractDeployedInstanceId = Convert.ToInt32(reader["SmartContractDeployedInstanceId"]);
+                    smartContractTransaction.TransactionUser = reader["TransactionUser"]?.ToString();
+                    smartContractTransaction.SmartContractFunction = reader["SmartContractFunction"]?.ToString();
+                    smartContractTransaction.SmartContractFunctionParameters = reader["SmartContractFunctionParameters"]?.ToString();
+                    smartContractTransaction.CreatedDatetime = string.IsNullOrEmpty(reader["CreatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["CreatedDatetime"]);
+                    smartContractTransaction.UpdatedDatetime = string.IsNullOrEmpty(reader["UpdatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["UpdatedDatetime"]);
+                    smartContractTransactions.Add(smartContractTransaction);    
+                }
+            }
+            return smartContractTransactions;
         }
 
         public Task<Dictionary<string, SmartContractTransaction>> GetSmartContractTransactionsInfoWithList(List<string> transactionsHashList)

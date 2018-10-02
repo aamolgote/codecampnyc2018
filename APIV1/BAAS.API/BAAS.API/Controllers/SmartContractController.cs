@@ -136,8 +136,8 @@ namespace BAAS.API.Controllers
         {
             try
             {
-                var smartContractDeployedInstances = await this.smartContractManager.GetSmartContractDeployedInstances(smartContractId);
-                return Ok(smartContractDeployedInstances);
+                var smartContractDeployedInstance = await this.smartContractManager.GetSmartContractDeployedInstances(smartContractId);
+                return Ok(smartContractDeployedInstance);
             }
             catch (Exception ex)
             {

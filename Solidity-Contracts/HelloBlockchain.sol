@@ -1,5 +1,5 @@
-pragma solidity ^0.4.20;
-
+// solium-disable linebreak-style
+pragma solidity ^0.4.24;
 contract HelloBlockchain {
 
      //Set of States
@@ -14,14 +14,10 @@ contract HelloBlockchain {
     string public ResponseMessage;
 
     // constructor function
-    constructor HelloBlockchain(string message) public
-    {
+    constructor(string message) public{
         Requestor = msg.sender;
         RequestMessage = message;
         State = StateType.Request;
-
-        // call ContractCreated() to create an instance of this workflow
-        ContractCreated();
     }
 
     // call this function to send a request
@@ -34,9 +30,7 @@ contract HelloBlockchain {
 
         RequestMessage = requestMessage;
         State = StateType.Request;
-
-        // call ContractUpdated() to record this action
-        ContractUpdated('SendRequest');
+       
     }
 
     // call this function to send a response
@@ -47,6 +41,5 @@ contract HelloBlockchain {
         // call ContractUpdated() to record this action
         ResponseMessage = responseMessage;
         State = StateType.Respond;
-        ContractUpdated('SendResponse');
     }
 }

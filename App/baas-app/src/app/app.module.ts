@@ -14,6 +14,8 @@ import { BlockExplorerService } from './block-explorer/block-explorer.service';
 import { SmartContractService } from './smart-contracts/smart-contract.service';
 import { CreateSmartContractComponent } from './smart-contracts/create-smart-contract/create-smart-contract.component';
 import { FileDragDropUploadComponent } from './file-drag-drop-upload/file-drag-drop-upload.component';
+import { SmartContractInstancesComponent } from './smart-contracts/smart-contract-instances/smart-contract-instances.component';
+import { CreateSmartContractInstanceComponent } from './smart-contracts/create-smart-contract-instance/create-smart-contract-instance.component';
 const appRoutes: Routes = [
   {
     path: '',
@@ -30,7 +32,16 @@ const appRoutes: Routes = [
   {
     path: 'blockexplorer/listing',
     component: BlockExplorerComponent
+  },
+  {
+    path: 'smartcontract/instances/deploy/:id',
+    component: CreateSmartContractInstanceComponent
+  },
+  {
+    path: 'smartcontract/instances/:id',
+    component: SmartContractInstancesComponent
   }
+ 
 
 ]
 @NgModule({
@@ -40,7 +51,9 @@ const appRoutes: Routes = [
     AccountManagementComponent,
     BlockExplorerComponent,
     CreateSmartContractComponent,
-    FileDragDropUploadComponent
+    FileDragDropUploadComponent,
+    SmartContractInstancesComponent,
+    CreateSmartContractInstanceComponent
   ],
   imports: [
     BrowserModule,

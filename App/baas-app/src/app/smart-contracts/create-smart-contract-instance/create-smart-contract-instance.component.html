@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div style="margin-top: 20px;">
+                <div class="row" *ngIf="deployedInstance" style="border-bottom: 1px solid #dedede">
+                    <div class="col-md-4">
+                        <span>
+                            <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                            Name: {{deployedInstance.smartContract.name}}
+                        </span>
+                    </div>
+                    <div class="col-md-4">
+                        <span>
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            Created By: {{deployedInstance.smartContract.createdByUserLoginId}}
+                        </span>
+                    </div>
+                    <div class="col-md-4">
+
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 20px">
+                    <div class="col-md-12">
+                        <form [formGroup]="deploymentForm" (ngSubmit)="onSubmit()">
+                            <div class="form-group">
+                                <label for="name">Name (Friendly Name/Disply Name)</label>
+                                <input type="text" class="form-control" formControlName="deployedInstanceDisplayName">
+                            </div>
+                            <div class="form-group">
+                                <label for="creator">Deployed BY</label>
+                                <select class="form-control" id="deployByUserLoginId" formControlName="deployByUserLoginId">
+                                    <option *ngFor="let account of accounts" [ngValue]="account.userLoginId">
+                                        {{account.userLoginId}} - {{account.address}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="name">Initial Data (Constructor Parameters):</label>
+                            </div>
+                            <div class="form-group" formArrayName="constructorParams">
+                                <div [formGroupName]="i" *ngFor="let tech of deploymentForm['controls'].constructorParams['controls'];let i = index">
+                                    <label for="name">{{constructorInputs[i].name}}</label>
+                                    <input class="form-control" type="text" maxlength="50" formControlName="name" *ngIf="(constructorInputs[i].type === 'string' || constructorInputs[i].type === 'int256'  || constructorInputs[i].type === 'uint32' || constructorInputs[i].type === 'uint256')">
+                                    <div class="checkbox" *ngIf="constructorInputs[i].type === 'bool'">
+                                        <label>
+                                            <input type="checkbox" formControlName="name">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" *ngIf="deployedContract">
+                                <label for="creator">Deployed Contract Address:</label>
+                                <label>{{deployedContract.deployedAddress}}</label>
+                            </div>
+                            <div>
+                                <button type="submit" [disabled]="deploymentForm.pristine" class="btn btn-success deploy-btn">Submit</button>
+                                <div class="loader-container" [hidden]="!displayLoader">
+                                    <div class="loader">
+
+                                    </div>
+                                </div>
+                                <a href="javascript:void(0);" class="btn btn-secondary float-right" (click)="navigateBack()">
+                                    <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
