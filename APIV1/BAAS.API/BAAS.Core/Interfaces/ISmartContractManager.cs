@@ -22,9 +22,9 @@ namespace BAAS.Core.Interfaces
 
         Task<SmartContractDeployedInstanceItem> DeploySmartContract(SmartContractDeployRequest smartContractDeployRequest);
 
-        Task<SmartContractDeployedInstanceItem> ExecuteWriteFunction(SmartContractExecutionRequestPayload smartContractExecutionRequestPayload);
+        Task<SmartContractTransaction> ExecuteWriteFunction(SmartContractExecutionRequestPayload smartContractExecutionRequestPayload);
 
-        Task<SmartContractDeployedInstanceItem> ExecuteReadFunction(SmartContractExecutionRequestPayload smartContractExecutionRequestPayload);
+        Task<string> ExecuteReadFunction(SmartContractExecutionRequestPayload smartContractExecutionRequestPayload);
 
         Task<JToken> CompileSmartContract(SmartContractCompilePayload smartContractCompilePayload);
     }

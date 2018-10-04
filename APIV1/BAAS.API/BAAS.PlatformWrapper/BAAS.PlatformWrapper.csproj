@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{164D4A45-707E-424B-BD2E-D3DD88FE6C9A}</ProjectGuid>
+    <ProjectGuid>{D1ACFD76-3093-4868-A61C-2ADFB0B4C5F5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BAAS.Nethereum</RootNamespace>
-    <AssemblyName>BAAS.Nethereum</AssemblyName>
+    <RootNamespace>BAAS.PlatformWrapper</RootNamespace>
+    <AssemblyName>BAAS.PlatformWrapper</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -48,6 +48,10 @@
     </Reference>
     <Reference Include="Nethereum.Contracts, Version=2.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nethereum.Contracts.2.5.1\lib\net451\Nethereum.Contracts.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nethereum.Geth, Version=2.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nethereum.Geth.2.5.1\lib\net451\Nethereum.Geth.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Nethereum.Hex, Version=2.5.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -107,17 +111,25 @@
     <Compile Include="SmartContractManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\BAAS.Core\BAAS.Core.csproj">
       <Project>{d18846ae-937b-4e0a-b291-b6f46158eede}</Project>
       <Name>BAAS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BAAS.Db\BAAS.Db.csproj">
+      <Project>{f6db7da0-0f3c-47b2-b159-c0721e8a7460}</Project>
+      <Name>BAAS.Db</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BAAS.Logger\BAAS.Logger.csproj">
+      <Project>{647a33f6-455d-4e72-af70-8bdc2a41a02b}</Project>
+      <Name>BAAS.Logger</Name>
     </ProjectReference>
     <ProjectReference Include="..\BAAS.Models\BAAS.Models.csproj">
       <Project>{62dfab48-6825-4502-8289-8d19679af5df}</Project>
       <Name>BAAS.Models</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

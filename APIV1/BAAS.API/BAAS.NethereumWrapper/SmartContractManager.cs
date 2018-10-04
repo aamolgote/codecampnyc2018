@@ -8,7 +8,7 @@ using BAAS.Models;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
-namespace BAAS.Nethereum
+namespace BAAS.NethereumWrapper
 {
     public class SmartContractManager : ISmartContractManager
     {
@@ -94,9 +94,26 @@ namespace BAAS.Nethereum
             throw new NotImplementedException();
         }
 
-        public Task<SmartContractDeployedInstanceItem> DeploySmartContract(SmartContractDeployRequest smartContractDeployRequest)
+        public async Task<SmartContractDeployedInstanceItem> DeploySmartContract(SmartContractDeployRequest smartContractDeployRequest)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var smartContract = await this.smartContractDb.GetSmartContract(smartContractDeployRequest.SmartContractId);
+                var userDltAccount = await this.accountDb.GetUserDltAccountByLoginId(smartContractDeployRequest.DeployByUserLoginId);
+                if (smartContract != null)
+                {
+
+                    var web3 = Nethereum.Geth.Web3Geth("http://localhost:8545/");
+                    //var unlockResult = await 
+                    
+                }
+                
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return null;
         }
 
         public Task<SmartContractDeployedInstanceItem> ExecuteWriteFunction(SmartContractExecutionRequestPayload smartContractExecutionRequestPayload)

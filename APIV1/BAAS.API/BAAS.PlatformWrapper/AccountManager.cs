@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BAAS.Models;
 
-namespace BAAS.Nethereum
+namespace BAAS.PlatformWrapper
 {
     public class AccountManager : IAccountManager
     {

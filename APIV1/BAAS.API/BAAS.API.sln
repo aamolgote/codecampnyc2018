@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.API", "BAAS.API\BAAS.API.csproj", "{DFFD2283-BA15-4236-8504-628E3AAE29E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.Nethereum", "BAAS.Nethereum\BAAS.Nethereum.csproj", "{164D4A45-707E-424B-BD2E-D3DD88FE6C9A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.Core", "BAAS.Core\BAAS.Core.csproj", "{D18846AE-937B-4E0A-B291-B6F46158EEDE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.Db", "BAAS.Db\BAAS.Db.csproj", "{F6DB7DA0-0F3C-47B2-B159-C0721E8A7460}"
@@ -14,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.Models", "BAAS.Models\BAAS.Models.csproj", "{62DFAB48-6825-4502-8289-8D19679AF5DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.Logger", "BAAS.Logger\BAAS.Logger.csproj", "{647A33F6-455D-4E72-AF70-8BDC2A41A02B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.PlatformWrapper", "BAAS.PlatformWrapper\BAAS.PlatformWrapper.csproj", "{D1ACFD76-3093-4868-A61C-2ADFB0B4C5F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +25,6 @@ Global
 		{DFFD2283-BA15-4236-8504-628E3AAE29E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFFD2283-BA15-4236-8504-628E3AAE29E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFFD2283-BA15-4236-8504-628E3AAE29E0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{164D4A45-707E-424B-BD2E-D3DD88FE6C9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{164D4A45-707E-424B-BD2E-D3DD88FE6C9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{164D4A45-707E-424B-BD2E-D3DD88FE6C9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{164D4A45-707E-424B-BD2E-D3DD88FE6C9A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D18846AE-937B-4E0A-B291-B6F46158EEDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D18846AE-937B-4E0A-B291-B6F46158EEDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D18846AE-937B-4E0A-B291-B6F46158EEDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +41,10 @@ Global
 		{647A33F6-455D-4E72-AF70-8BDC2A41A02B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{647A33F6-455D-4E72-AF70-8BDC2A41A02B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{647A33F6-455D-4E72-AF70-8BDC2A41A02B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1ACFD76-3093-4868-A61C-2ADFB0B4C5F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1ACFD76-3093-4868-A61C-2ADFB0B4C5F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1ACFD76-3093-4868-A61C-2ADFB0B4C5F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1ACFD76-3093-4868-A61C-2ADFB0B4C5F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
