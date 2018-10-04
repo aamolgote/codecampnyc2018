@@ -1,11 +1,4 @@
-﻿using BAAS.Core.Interfaces;
-using BAAS.Db;
-using BAAS.Logger;
-using BAAS.Models;
-using BAAS.Nethereum;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -13,6 +6,13 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using BAAS.Core.Interfaces;
+using BAAS.Db;
+using BAAS.Logger;
+using BAAS.Models;
+using BAAS.PlatformWrapper;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace BAAS.API.Controllers
 {

@@ -113,6 +113,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\SmartContractController.cs" />
+    <Compile Include="Controllers\TransactionBlocksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -149,9 +150,9 @@
       <Project>{62dfab48-6825-4502-8289-8d19679af5df}</Project>
       <Name>BAAS.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BAAS.Nethereum\BAAS.Nethereum.csproj">
-      <Project>{164d4a45-707e-424b-bd2e-d3dd88fe6c9a}</Project>
-      <Name>BAAS.Nethereum</Name>
+    <ProjectReference Include="..\BAAS.PlatformWrapper\BAAS.PlatformWrapper.csproj">
+      <Project>{d1acfd76-3093-4868-a61c-2adfb0b4c5f5}</Project>
+      <Name>BAAS.PlatformWrapper</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

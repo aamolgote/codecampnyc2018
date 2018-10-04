@@ -12,11 +12,11 @@ export class BlockExplorerService {
   constructor(
     private http: HttpClient,
     @Inject(APP_CONFIG) private config: IAppConfig) {
-    this.baseUrl = this.config.apiEndpointBaseUrl + 'api/companies/';
+    this.baseUrl = this.config.apiEndpointBaseUrl;
   }
 
   getRecentBlocks(numberOfBlocks: number): Observable<DltBlock[]>{
-    let apiUrl = this.baseUrl + "api/block/recent?numberofblocks=" + numberOfBlocks;
+    let apiUrl = this.baseUrl + "api/blocks/recent?numberofblocks=" + numberOfBlocks;
     return this.http.get<DltBlock[]>(apiUrl)
       .pipe(
         catchError(this.handleError('getRecentBlocks', []))
