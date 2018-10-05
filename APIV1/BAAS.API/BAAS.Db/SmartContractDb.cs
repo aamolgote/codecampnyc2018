@@ -129,26 +129,26 @@ namespace BAAS.Db
                 sqlcmd.Parameters.Add(new SqlParameter()
                 {
                     ParameterName = "@deployedAddress",
-                    SqlDbType = System.Data.SqlDbType.Int,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
                     Value = smartContractDeployedInstanceItem.DeployedAddress
                 });
 
                 sqlcmd.Parameters.Add(new SqlParameter()
                 {
                     ParameterName = "@initialData",
-                    SqlDbType = System.Data.SqlDbType.Int,
+                    SqlDbType = System.Data.SqlDbType.Text,
                     Value = smartContractDeployedInstanceItem.InitialData
                 });
                 sqlcmd.Parameters.Add(new SqlParameter()
                 {
                     ParameterName = "@deployByUserLoginId",
-                    SqlDbType = System.Data.SqlDbType.Int,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
                     Value = smartContractDeployedInstanceItem.DeployByUserLoginId
                 });
                 sqlcmd.Parameters.Add(new SqlParameter()
                 {
                     ParameterName = "@deployedInstanceDisplayName",
-                    SqlDbType = System.Data.SqlDbType.Int,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
                     Value = smartContractDeployedInstanceItem.DeployedInstanceDisplayName
                 });
                 conn.Open();

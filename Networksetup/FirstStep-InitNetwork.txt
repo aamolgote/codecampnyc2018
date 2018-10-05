@@ -1,0 +1,2 @@
+geth --datadir=Node1 --keystore="C:\TFS\BAASBlockchain\Keystore" init genesis.json
+geth --datadir=Node2 --keystore="C:\TFS\BAASBlockchain\Keystore" init genesis.json
