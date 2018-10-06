@@ -141,7 +141,7 @@ namespace BAAS.Db
                 });
                 sqlcmd.Parameters.Add(new SqlParameter()
                 {
-                    ParameterName = "@deployByUserLoginId",
+                    ParameterName = "@deployedByUserLoginId",
                     SqlDbType = System.Data.SqlDbType.VarChar,
                     Value = smartContractDeployedInstanceItem.DeployByUserLoginId
                 });
@@ -157,11 +157,11 @@ namespace BAAS.Db
                 {
                     mutatedDeployedInstanceItem = new SmartContractDeployedInstanceItem();
                     mutatedDeployedInstanceItem.SmartContractId = Convert.ToInt32(reader["SmartContractId"]);
-                    mutatedDeployedInstanceItem.SmartContractInstanceId = Convert.ToInt32(reader["SmartContractInstanceId"]);
+                    mutatedDeployedInstanceItem.SmartContractInstanceId = Convert.ToInt32(reader["SmartContractDeployedInstanceId"]);
                     mutatedDeployedInstanceItem.DeployedAddress = reader["DeployedAddress"]?.ToString();
                     mutatedDeployedInstanceItem.DeployedInstanceDisplayName = reader["DeployedInstanceDisplayName"]?.ToString();
                     mutatedDeployedInstanceItem.InitialData = reader["InitialData"]?.ToString();
-                    mutatedDeployedInstanceItem.DeployByUserLoginId = reader["DeployByUserLoginId"]?.ToString();
+                    mutatedDeployedInstanceItem.DeployByUserLoginId = reader["DeployedByUserLoginId"]?.ToString();
                     mutatedDeployedInstanceItem.CreatedDatetime = string.IsNullOrEmpty(reader["CreatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["CreatedDatetime"]);
                     mutatedDeployedInstanceItem.UpdatedDatetime = string.IsNullOrEmpty(reader["UpdatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["UpdatedDatetime"]);
                 }

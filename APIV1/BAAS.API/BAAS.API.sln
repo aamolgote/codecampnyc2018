@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.Logger", "BAAS.Logger\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.PlatformWrapper", "BAAS.PlatformWrapper\BAAS.PlatformWrapper.csproj", "{D1ACFD76-3093-4868-A61C-2ADFB0B4C5F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAAS.DbTests", "BAAS.DbTests\BAAS.DbTests.csproj", "{8D95D068-1B72-4CB9-8E7A-9D3263FEECD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{D1ACFD76-3093-4868-A61C-2ADFB0B4C5F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1ACFD76-3093-4868-A61C-2ADFB0B4C5F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1ACFD76-3093-4868-A61C-2ADFB0B4C5F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D95D068-1B72-4CB9-8E7A-9D3263FEECD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D95D068-1B72-4CB9-8E7A-9D3263FEECD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D95D068-1B72-4CB9-8E7A-9D3263FEECD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D95D068-1B72-4CB9-8E7A-9D3263FEECD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
