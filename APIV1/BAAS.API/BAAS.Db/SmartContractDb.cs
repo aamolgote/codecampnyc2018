@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using BAAS.Core.Interfaces;
 using BAAS.Models;
+using Newtonsoft.Json;
 
 namespace BAAS.Db
 {
@@ -341,9 +342,9 @@ namespace BAAS.Db
                 while (reader.Read())
                 {
                     SmartContractDeployedInstanceItem smartContractDeployedInstanceItem = new SmartContractDeployedInstanceItem();
-                    smartContractDeployedInstanceItem.SmartContractInstanceId = Convert.ToInt32(reader["SmartContractInstanceId"]);
+                    smartContractDeployedInstanceItem.SmartContractInstanceId = Convert.ToInt32(reader["SmartContractDeployedInstanceId"]);
                     smartContractDeployedInstanceItem.SmartContractId = Convert.ToInt32(reader["SmartContractId"]);
-                    smartContractDeployedInstanceItem.DeployByUserLoginId = reader["DeployByUserLoginId"]?.ToString();
+                    smartContractDeployedInstanceItem.DeployByUserLoginId = reader["DeployedByUserLoginId"]?.ToString();
                     smartContractDeployedInstanceItem.DeployedAddress = reader["DeployedAddress"]?.ToString();
                     smartContractDeployedInstanceItem.InitialData = reader["InitialData"]?.ToString();
                     smartContractDeployedInstanceItem.DeployedInstanceDisplayName = reader["DeployedInstanceDisplayName"]?.ToString();
@@ -405,15 +406,90 @@ namespace BAAS.Db
                     smartContractTransaction.SmartContractFunctionParameters = reader["SmartContractFunctionParameters"]?.ToString();
                     smartContractTransaction.CreatedDatetime = string.IsNullOrEmpty(reader["CreatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["CreatedDatetime"]);
                     smartContractTransaction.UpdatedDatetime = string.IsNullOrEmpty(reader["UpdatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["UpdatedDatetime"]);
-                    smartContractTransactions.Add(smartContractTransaction);    
+                    smartContractTransactions.Add(smartContractTransaction);
                 }
             }
             return smartContractTransactions;
         }
 
-        public Task<Dictionary<string, SmartContractTransaction>> GetSmartContractTransactionsInfoWithList(List<string> transactionsHashList)
+        public async Task<Dictionary<string, SmartContractTransaction>> GetSmartContractTransactionsInfoWithList(List<string> transactionsHashList)
         {
-            throw new NotImplementedException();
+            string transactionHashCommaSeptList = string.Join(",", transactionsHashList.ToArray());
+            using (SqlConnection conn = new SqlConnection(DbConfiguration.ConnectionString))
+            {
+
+                SqlCommand sqlcmd = new SqlCommand(StoredProcedures.GetSmartContractTransactionInfoByHash, conn);
+                sqlcmd.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlcmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@transactionHashCommaSepList",
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    Value = transactionHashCommaSeptList
+                });
+                conn.Open();
+                var reader = await sqlcmd.ExecuteReaderAsync();
+                Dictionary<string, SmartContractTransaction> smartContractTransactionDict = new Dictionary<string, SmartContractTransaction>();
+                while (reader.Read())
+                {
+                    var smartContractTransaction = new SmartContractTransaction();
+                    smartContractTransaction.SmartContractTransactionId = Convert.ToInt32(reader["SmartContractTransactionId"]);
+                    smartContractTransaction.SmartContractDeployedInstanceId = Convert.ToInt32(reader["SmartContractDeployedInstanceId"]);
+                    smartContractTransaction.TransactionHash = reader["TransactionHash"]?.ToString();
+                    smartContractTransaction.TransactionUser = reader["TransactionUser"]?.ToString();
+                    smartContractTransaction.SmartContractFunction = reader["SmartContractFunction"]?.ToString();
+                    smartContractTransaction.SmartContractFunctionParameters = reader["SmartContractFunctionParameters"]?.ToString();
+                    smartContractTransaction.CreatedDatetime = string.IsNullOrEmpty(reader["CreatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["CreatedDatetime"]);
+                    smartContractTransaction.UpdatedDatetime = string.IsNullOrEmpty(reader["UpdatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["UpdatedDatetime"]);
+
+                    List<string> paramsFromDb = reader["SmartContractFunctionParameters"].ToString().Trim(new char[] { '[', ']' }).Split(',').ToList();
+                    smartContractTransaction.SmartContractFunctionParametersList = paramsFromDb;
+
+                    string abi = reader["Abi"].ToString();
+                    List<string> paramNames = this.AbiToParamterNames(abi, smartContractTransaction.SmartContractFunction);
+
+                    smartContractTransaction.SmartContractFunctionParamterNames = this.CreateParamInfo(paramNames, paramsFromDb);
+
+                    smartContractTransactionDict[smartContractTransaction.TransactionHash] = smartContractTransaction;
+                }
+                return smartContractTransactionDict;
+            }
+
+        }
+
+        private List<SmartContractFunctionParamterInfo> CreateParamInfo(List<string> names, List<string> values)
+        {
+            List<SmartContractFunctionParamterInfo> paramsInfo = new List<SmartContractFunctionParamterInfo>();
+            int size = names.Count;
+            if (size == values.Count)
+            {
+                for (int i = 0; i < names.Count; ++i)
+                {
+                    SmartContractFunctionParamterInfo param = new SmartContractFunctionParamterInfo()
+                    {
+                        ParamName = names[i],
+                        ParamValue = values[i]
+                    };
+                }
+            }
+            return paramsInfo;
+        }
+
+        private List<string> AbiToParamterNames(string abi, string functionName)
+        {
+            dynamic jsonAbi = JsonConvert.DeserializeObject(abi);
+            List<string> functionParameterNames = new List<string>();
+            foreach (var function in jsonAbi)
+            {
+                if (function.name == functionName)
+                {
+                    foreach (var input in function.inputs)
+                    {
+                        string inputsName = input.name;
+                        functionParameterNames.Add(inputsName);
+                    }
+                }
+            }
+            return functionParameterNames;
         }
     }
 }

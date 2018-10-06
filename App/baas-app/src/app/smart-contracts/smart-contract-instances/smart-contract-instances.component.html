@@ -42,14 +42,14 @@
                             <th></th>
                         </tr>
                         <tr *ngFor="let instanceItem of pagedSmartContractInstanceItems">
-                            <td>{{instanceItem.deployedInstanceDiplayName}}</td>
+                            <td>{{instanceItem.deployedInstanceDisplayName}}</td>
                             <td>{{instanceItem.deployedAddress}}</td>
                             <td>{{instanceItem.deployByUserLoginId}}</td>
                             <td>{{instanceItem.initialData}}</td>
                             <td>TBD</td>
                             <td>{{instanceItem.createdDatetime}}</td>
                             <td>
-                                <a href="javascript:void(0)" [routerLink]="['./smartcontract/instance/deploy/', instanceItem.smartContractInstanceId]">
+                                <a href="javascript:void(0)" [routerLink]="['./action/', instanceItem.smartContractInstanceId]">
                                     <i class="fa fa-exchange" aria-hidden="true"></i>
                                 </a>
                             </td>

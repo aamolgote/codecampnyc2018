@@ -21,6 +21,7 @@ namespace BAAS.Db
         public const string GetSmartContractDeployedInstance = "GetSmartContractDeployedInstance";
         public const string InsertSmartContractTransaction = "InsertSmartContractTransaction";
         public const string GetSmartContractTransactionsForDeployedInstance = "GetSmartContractTransactionsForDeployedInstance";
+        public const string GetSmartContractTransactionInfoByHash = "GetSmartContractTransactionInfoByHash";
         //public const string GetSmartContracts = "GetSmartContracts";
         //public const string GetSmartContractDeployedInstances = "GetSmartContractDeployedInstances";
         //public const string GetSmartContract = "GetSmartContract";

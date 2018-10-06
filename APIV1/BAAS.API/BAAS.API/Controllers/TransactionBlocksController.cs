@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using BAAS.Core.Interfaces;
+using BAAS.Db;
 using BAAS.PlatformWrapper;
 
 namespace BAAS.API.Controllers
@@ -16,6 +17,12 @@ namespace BAAS.API.Controllers
     public class TransactionBlocksController : ApiController
     {
         private IBlockManager blockManager;
+        private ISmartContractDb smartContractDb;
+        public TransactionBlocksController()
+        {
+            this.smartContractDb = new SmartContractDb(); 
+            this.blockManager = new BlockManager(this.smartContractDb);
+        }
 
         public TransactionBlocksController(IBlockManager blockManager)
         {

@@ -43,6 +43,11 @@
                                         {{dltBlock.blockNumber}}
                                     </span>
                                 </td>
+                                <td>
+                                    <textarea rows="4" cols="30">
+                                        {{dltBlock.blockHash}}
+                                    </textarea>
+                                </td>
                                 <td>{{dltBlock.size}}</td>
                                 <td>{{dltBlock.blockDatetime}}</td>
                                 <td>{{dltBlock.transactionCount}}</td>
@@ -67,11 +72,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr * ngFor="let dlttransaction of dltBlock.dltTransactions">
+                                            <tr *ngFor="let dltTransaction of dltBlock.dltTransactions">
                                                 <!-- | searchfilter: 'transactionHash' : "selected" -->
                                                 <td>
                                                     <textarea>
-                                                        {{dlttransaction.transactionHash}}
+                                                        {{dltTransaction.transactionHash}}
                                                     </textarea>
                                                 </td>
                                                 <td>{{dltTransaction.name}}</td>

@@ -124,7 +124,7 @@ namespace BAAS.PlatformWrapper
                 dltBlocks.Add(block);
             }
             dltBlocks = await AddDatabaseDataToDltBlock(dltBlocks, transactionHashesList);
-            return dltBlocks;
+            return dltBlocks.OrderByDescending( block => block.BlockNumber).ToList();
         }
 
         private async Task<List<DltBlock>> AddDatabaseDataToDltBlock(List<DltBlock> dltBlocksParams, List<string> transactionHashesList)

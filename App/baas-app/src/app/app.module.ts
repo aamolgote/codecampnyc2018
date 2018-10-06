@@ -16,6 +16,7 @@ import { CreateSmartContractComponent } from './smart-contracts/create-smart-con
 import { FileDragDropUploadComponent } from './file-drag-drop-upload/file-drag-drop-upload.component';
 import { SmartContractInstancesComponent } from './smart-contracts/smart-contract-instances/smart-contract-instances.component';
 import { CreateSmartContractInstanceComponent } from './smart-contracts/create-smart-contract-instance/create-smart-contract-instance.component';
+import { SmartContractInitiateActionComponent } from './smart-contracts/smart-contract-initiate-action/smart-contract-initiate-action.component';
 const appRoutes: Routes = [
   {
     path: '',
@@ -38,6 +39,10 @@ const appRoutes: Routes = [
     component: CreateSmartContractInstanceComponent
   },
   {
+    path: 'smartcontract/instances/:id/action/:instanceId',
+    component: SmartContractInitiateActionComponent
+  },
+  {
     path: 'smartcontract/instances/:id',
     component: SmartContractInstancesComponent
   }
@@ -53,7 +58,8 @@ const appRoutes: Routes = [
     CreateSmartContractComponent,
     FileDragDropUploadComponent,
     SmartContractInstancesComponent,
-    CreateSmartContractInstanceComponent
+    CreateSmartContractInstanceComponent,
+    SmartContractInitiateActionComponent
   ],
   imports: [
     BrowserModule,

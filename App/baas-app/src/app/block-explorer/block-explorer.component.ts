@@ -25,11 +25,11 @@ export class BlockExplorerComponent implements OnInit {
 
   ngOnInit() {
     this.bindData();
-    if (this.autoRefresh) {
-      this.timerId = setInterval(() => {
-        this.bindData();
-      }, this.refreshInterval);
-    }
+    // if (this.autoRefresh) {
+    //   this.timerId = setInterval(() => {
+    //     this.bindData();
+    //   }, this.refreshInterval);
+    // }
   }
 
   ngOnDestroy(): void {
@@ -55,6 +55,7 @@ export class BlockExplorerComponent implements OnInit {
     this.blockExplorerService.getRecentBlocks(100)
       .subscribe((dltBlocks: DltBlock[]) => {
         this.dltBlocks = dltBlocks;
+        console.log(this.dltBlocks);
         if (this.dltBlocks && this.dltBlocks.length) {
           this.dltBlocks.forEach((dltBlock) => {
             if (blockDictionary[dltBlock.blockNumber]) {
