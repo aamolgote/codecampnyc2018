@@ -1,45 +1,34 @@
 // solium-disable linebreak-style
 pragma solidity ^0.4.24;
 contract HelloBlockchain {
-
      //Set of States
-    enum StateType { Request, Respond}
+    enum StateType { Initialized, MessageSent}
 
     //List of properties
-    StateType public  State;
-    address public  Requestor;
-    address public  Responder;
-
-    string public RequestMessage;
-    string public ResponseMessage;
+    StateType private _state;
+    address private  _requestor;
+    string private  _message;
 
     // constructor function
     constructor(string message) public{
-        Requestor = msg.sender;
-        RequestMessage = message;
-        State = StateType.Request;
+        _requestor = msg.sender;
+        _message = message;
+        _state = StateType.Initialized;
     }
 
-    // call this function to send a request
-    function SendRequest(string requestMessage) public
+    function SendMessage(string message) public
     {
-        if (Requestor != msg.sender)
-        {
-            revert();
-        }
-
-        RequestMessage = requestMessage;
-        State = StateType.Request;
-       
+        _message = message;
+        _state = StateType.MessageSent;
     }
 
-    // call this function to send a response
-    function SendResponse(string responseMessage) public
+    function GetStatus() public view returns(StateType)
     {
-        Responder = msg.sender;
+        return _state;
+    }
 
-        // call ContractUpdated() to record this action
-        ResponseMessage = responseMessage;
-        State = StateType.Respond;
+    function GetMessage() public view returns(string)
+    {
+        return _message;
     }
 }

@@ -37,14 +37,14 @@ export class SmartContractService {
     }
 
     executeReadFunction(executeFunctionPayload: ExecuteFunctionPayload): Observable<string> {
-        let apiUrl = this.baseUrl + "api/smartcontract/executereadfunction";
+        let apiUrl = this.baseUrl + "api/smartcontract/instance/executereadfunction";
         return this.http.post<string>(apiUrl, executeFunctionPayload)
             .pipe(
                 catchError(this.handleError('executeReadFunction', null))
             )
     }
     executewriteFunction(executeFunctionPayload: ExecuteFunctionPayload): Observable<SmartContractTransaction> {
-        let apiUrl = this.baseUrl + "api/smartcontract/executewritefunction";
+        let apiUrl = this.baseUrl + "api/smartcontract/instance/executewritefunction";
         return this.http.post<SmartContractTransaction>(apiUrl, executeFunctionPayload)
             .pipe(
                 catchError(this.handleError('executewriteFunction', null))
@@ -87,10 +87,12 @@ export class SmartContractService {
     private smartContractInstance: SmartContractInstance;
     saveSmartContract(smartContractInstance: SmartContractInstance) {
         this.smartContractInstance = smartContractInstance;
+        console.log("Save Smart contract");
     }
 
     getSavedSmartContract(): SmartContractInstance {
         return this.smartContractInstance;
+        console.log("Get Smart contract");
     }
     private handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
