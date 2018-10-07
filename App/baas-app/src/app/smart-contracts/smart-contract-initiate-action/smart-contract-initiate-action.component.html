@@ -1,0 +1,135 @@
+<div>
+    <div class="container" *ngIf="deployedInstance">
+        <div class="row" style="margin-bottom: 10px">
+            <div class="col-md-12">
+                <a href="javascript:void(0);" class="btn btn-secondary float-right" (click)="navigateBack()">
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+                </a>
+            </div>
+        </div>
+        <div class="row" *ngIf="smartContract" style="margin-bottom: 10px">
+            <div class="col-md-6">
+                <i class="fa fa-id-card-o" aria-hidden="true"></i> Name: {{smartContract.name}}
+            </div>
+            <div class="col-md-4">
+                <span>
+                    <i class="fa fa-user" aria-hidden="true"></i> Created by: {{smartContract.createdByUserLoginId}
+                </span>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+        <div class="row" *ngIf="smartContractDeployedInstance" style="margin-bottom: 20px">
+            <div class="col-md-6">
+                <i class="fa fa-file-text-o" aria-hidden="true"></i> Instance Display Name:
+                {{smartContractDeployedInstance.deployedInstanceDisplayName}}
+            </div>
+            <div class="col-md-4">
+                <span>
+                    <i class="fa fa-user-circle-o" aria-hidden="true"></i> Deployed by:
+                    {{smartContractDeployedInstance.deployedByUserLoginId}
+                </span>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div *ngFor="let contractFunctionInfo of contractFunctionInfoList">
+                    <div *ngIf="contractFunctionInfo.functionName" style="border: 1px solid #dedede;margin-bottom: 10px;">
+                        <div class="row" style="padding-left: 20px; padding-right: 20px">
+                            <div class="col-md-3">
+                                <span>
+                                    <i class="fa fa-pencil" aria-hidden="true"></i> Action:
+                                    {{contractFunctionInfo.functionName}
+                                </span>
+                            </div>
+                            <div class="col-md-4">
+                                <label>
+                                    <i class="fa fa-user-circle" aria-hidden="true"></i> Transaction User:
+                                </label>
+                                <select class="form-control" id="transactionUser" [(ngModel)]="contractFunctionInfo.transactionUser">
+                                    <option *ngFor="let account of accounts" [ngValue]="account.userLoginId">
+                                        {{account.userLoginId}} - {{account.address}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-5" [hidden]="!(contractFunctionInfo.inputParamsList && contractFunctionInfo.inputParamsList.length)">
+                                <label>Function Paramters</label>
+                                <div class="row" *ngFor="let input of contractFunctionInfo.inputParamsList">
+                                    <div class="col-md-6">
+                                        {{input.name}}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input class="form-control" type="text" [(ngModel)]="input.inputValue" *ngIf="input.type === 'string' || input.type === 'int256' || input.type === 'unit32' || input.type === 'uint256'">
+                                        <div class="checkbox" *ngIf="input.type === 'bool'">
+                                            <label>
+                                                <input type="checkbox" [(ngModel)]="input.inputValue">
+                                            </label>
+                                        </div>
+                                        <select class="form-control" [(ngModel)]="input.inputValue" *ngIf="input.type === 'address'">
+                                            <option *ngFor="let account of accounts" [ngValue]="account.userLoginId">
+                                                {{account.userLoginId}} - {{account.address}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="contractFunctionInfo.functionName">
+                            <button class="btn btn-primary float-right" (click)="executeFunctionOnContract(contractFunctionInfo)"
+                                (click)="displayOnPaneForFunction(contractFunctionInfo.functionName)">
+                                <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                            </button>
+                            <div class="loader-container" [hidden]="!displayLoader">
+                                <div *ngIf="displayLoaderFunc === contractFunctionInfo.functionName">
+                                    <div class="loader">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="contractFunctionInfo.readFunctionResponse || contractFunctionInfo.writeFunctionResponse">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-9" style="padding: 0px 30px 0px 30px">
+                                <label>Response:</label>
+                                <div *ngIf="contractFunctionInfo.readFunctionResponse">
+                                    <span>
+                                        {{contractFunctionInfo.readFunctionResponse}}
+                                    </span>
+                                </div>
+                                <div *ngIf="contractFunctionInfo.writeFunctionResponse">
+                                    <span>
+                                        {{contractFunctionInfo.writeFunctionResponse.transactionHash}}
+                                    </span>
+                                    <div>
+                                        <label>
+                                            User
+                                        </label>
+                                        {{contractFunctionInfo.writeFunctionResponse.transactionUser}} executed
+                                        {{contractFunctionInfo.writeFunctionResponse.smartContractFunctionParameters}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9" style="padding: 0px 30px 0px 30px">
+                                <div *ngIf="displayLoaderFunc === contractFunctionInfo.functionName && showErrorMessage">
+                                    <div class="alert" *ngIf="!(contractFunctionInfo.readFunctionResponse || contractFunctionInfo.writeFunctionResponse) && errorMsg">
+                                        {{errorMsg}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row" style="margin-top:10px;margin-bottom:10px">
+            <div class="col-md-12">
+                <a href="javascript:void(0)" class="btn btn-secondary float-right" (click)="navigateBack()">
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

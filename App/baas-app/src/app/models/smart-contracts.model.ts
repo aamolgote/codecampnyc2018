@@ -1,9 +1,9 @@
 export class ContractFunctionInfo {
-    belongsToCOntractInstance: string;
+    belongsToContractInstance: number;
     functionName: string;
     type: string;
     stateMutability: string;
-    imputParamsList: InputParamsInfo[];
+    inputParamsList: InputParamsInfo[];
     transactionUser: string;
     readFunctionResponse: any;
     writeFunctionResponse: any;

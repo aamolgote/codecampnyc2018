@@ -4,7 +4,7 @@ import { IAppConfig } from './../iapp.config'
 import { APP_CONFIG } from './../app.config'
 import { Observable, of, throwError, Subject, pipe } from 'rxjs';
 import { map, takeUntil, catchError } from 'rxjs/operators'
-import { SmartContractToBeDeployed, DeployedInstance, SmartContract, SmartContractInstance, SmartContractTransaction } from 'src/app/models/smart-contracts.model';
+import { SmartContractToBeDeployed, DeployedInstance, SmartContract, SmartContractInstance, SmartContractTransaction, ExecuteFunctionPayload } from 'src/app/models/smart-contracts.model';
 import { Response } from '@angular/http';
 @Injectable()
 export class SmartContractService {
@@ -36,7 +36,20 @@ export class SmartContractService {
 
     }
 
-
+    executeReadFunction(executeFunctionPayload: ExecuteFunctionPayload): Observable<string> {
+        let apiUrl = this.baseUrl + "api/smartcontract/executereadfunction";
+        return this.http.post<string>(apiUrl, executeFunctionPayload)
+            .pipe(
+                catchError(this.handleError('executeReadFunction', null))
+            )
+    }
+    executewriteFunction(executeFunctionPayload: ExecuteFunctionPayload): Observable<SmartContractTransaction> {
+        let apiUrl = this.baseUrl + "api/smartcontract/executewritefunction";
+        return this.http.post<SmartContractTransaction>(apiUrl, executeFunctionPayload)
+            .pipe(
+                catchError(this.handleError('executewriteFunction', null))
+            )
+    }
 
     getDeployedInstanceListing(smartContractId: number): Observable<SmartContractInstance> {
         let apiUrl = this.baseUrl + "api/smartcontract/instances?smartContractId=" + smartContractId;
@@ -71,7 +84,14 @@ export class SmartContractService {
                 catchError(this.handleError('an error occured while invoking createSmartContract', null))
             );
     }
+    private smartContractInstance: SmartContractInstance;
+    saveSmartContract(smartContractInstance: SmartContractInstance) {
+        this.smartContractInstance = smartContractInstance;
+    }
 
+    getSavedSmartContract(): SmartContractInstance {
+        return this.smartContractInstance;
+    }
     private handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
             console.error(error);
