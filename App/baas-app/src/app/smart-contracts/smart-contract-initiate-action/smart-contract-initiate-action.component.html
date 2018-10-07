@@ -55,7 +55,7 @@
                             </div>
                             <div class="col-md-5" [hidden]="!(contractFunctionInfo.inputParamsList && contractFunctionInfo.inputParamsList.length)">
                                 <label>Function Paramters</label>
-                                <div class="row" *ngFor="let input of contractFunctionInfo.inputParamsList">
+                                <div class="row" *ngFor="let input of contractFunctionInfo.inputParamsList" style="margin-top:5px;">
                                     <div class="col-md-6">
                                         {{input.name}}
                                     </div>
