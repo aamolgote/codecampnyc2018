@@ -44,8 +44,11 @@ export class SmartContractInstancesComponent implements OnInit {
 
   }
 
-  saveSmartContractToService(smartContractInstance: SmartContractInstance){
+  saveSmartContractToService(smartContractInstance: SmartContractInstance, smartContractInstanceId: number){
     this.smartContractService.saveSmartContract(smartContractInstance);
+    console.log(smartContractInstance);
+    //[routerLink]="['./action/', instanceItem.smartContractInstanceId]"
+    //this.router.navigate(['/action/', smartContractInstanceId]);
   }
 
   navigateBack() {

@@ -187,26 +187,26 @@ namespace BAAS.Db
                 sqlcmd.Parameters.Add(new SqlParameter()
                 {
                     ParameterName = "@transactionHash",
-                    SqlDbType = System.Data.SqlDbType.Int,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
                     Value = smartContractTransaction.TransactionHash
                 });
 
                 sqlcmd.Parameters.Add(new SqlParameter()
                 {
                     ParameterName = "@transactionUser",
-                    SqlDbType = System.Data.SqlDbType.Int,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
                     Value = smartContractTransaction.TransactionUser
                 });
                 sqlcmd.Parameters.Add(new SqlParameter()
                 {
                     ParameterName = "@smartContractFunction",
-                    SqlDbType = System.Data.SqlDbType.Int,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
                     Value = smartContractTransaction.SmartContractFunction
                 });
                 sqlcmd.Parameters.Add(new SqlParameter()
                 {
                     ParameterName = "@smartContractFunctionParameters",
-                    SqlDbType = System.Data.SqlDbType.Int,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
                     Value = smartContractTransaction.SmartContractFunctionParameters
                 });
                 conn.Open();
@@ -281,6 +281,7 @@ namespace BAAS.Db
                     smartContractFunction.Sequence = Convert.ToInt32(reader["Sequence"]);
                     smartContractFunction.CreatedDatetime = string.IsNullOrEmpty(reader["CreatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["CreatedDatetime"]);
                     smartContractFunction.UpdatedDatetime = string.IsNullOrEmpty(reader["UpdatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["UpdatedDatetime"]);
+                    smartContractFunctions.Add(smartContractFunction);
                 }
             }
             return smartContractFunctions;
@@ -309,9 +310,9 @@ namespace BAAS.Db
                 while (reader.Read())
                 {
                     smartContractDeployedInstanceItem = new SmartContractDeployedInstanceItem();
-                    smartContractDeployedInstanceItem.SmartContractInstanceId = Convert.ToInt32(reader["SmartContractInstanceId"]);
+                    smartContractDeployedInstanceItem.SmartContractInstanceId = Convert.ToInt32(reader["SmartContractDeployedInstanceId"]);
                     smartContractDeployedInstanceItem.SmartContractId = Convert.ToInt32(reader["SmartContractId"]);
-                    smartContractDeployedInstanceItem.DeployByUserLoginId = reader["DeployByUserLoginId"]?.ToString();
+                    smartContractDeployedInstanceItem.DeployByUserLoginId = reader["DeployedByUserLoginId"]?.ToString();
                     smartContractDeployedInstanceItem.DeployedAddress = reader["DeployedAddress"]?.ToString();
                     smartContractDeployedInstanceItem.InitialData = reader["InitialData"]?.ToString();
                     smartContractDeployedInstanceItem.DeployedInstanceDisplayName = reader["DeployedInstanceDisplayName"]?.ToString();

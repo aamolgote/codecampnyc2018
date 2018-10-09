@@ -1,5 +1,5 @@
 <div>
-    <div class="container" *ngIf="deployedInstance">
+    <div class="container">
         <div class="row" style="margin-bottom: 10px">
             <div class="col-md-12">
                 <a href="javascript:void(0);" class="btn btn-secondary float-right" (click)="navigateBack()">
@@ -13,7 +13,7 @@
             </div>
             <div class="col-md-4">
                 <span>
-                    <i class="fa fa-user" aria-hidden="true"></i> Created by: {{smartContract.createdByUserLoginId}
+                    <i class="fa fa-user" aria-hidden="true"></i> Created by: {{smartContract.createdByUserLoginId}}
                 </span>
             </div>
             <div class="col-md-2"></div>
@@ -27,20 +27,20 @@
             <div class="col-md-4">
                 <span>
                     <i class="fa fa-user-circle-o" aria-hidden="true"></i> Deployed by:
-                    {{smartContractDeployedInstance.deployedByUserLoginId}
+                    {{smartContractDeployedInstance.deployByUserLoginId}}
                 </span>
             </div>
             <div class="col-md-2"></div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div *ngFor="let contractFunctionInfo of contractFunctionInfoList">
+                <div *ngFor="let contractFunctionInfo of contractFunctionInfoList"> 
                     <div *ngIf="contractFunctionInfo.functionName" style="border: 1px solid #dedede;margin-bottom: 10px;">
                         <div class="row" style="padding-left: 20px; padding-right: 20px">
                             <div class="col-md-3">
                                 <span>
                                     <i class="fa fa-pencil" aria-hidden="true"></i> Action:
-                                    {{contractFunctionInfo.functionName}
+                                    {{contractFunctionInfo.functionName}}
                                 </span>
                             </div>
                             <div class="col-md-4">
@@ -55,7 +55,7 @@
                             </div>
                             <div class="col-md-5" [hidden]="!(contractFunctionInfo.inputParamsList && contractFunctionInfo.inputParamsList.length)">
                                 <label>Function Paramters</label>
-                                <div class="row" *ngFor="let input of contractFunctionInfo.inputParamsList">
+                                <div class="row" *ngFor="let input of contractFunctionInfo.inputParamsList" style="margin-top:5px;">
                                     <div class="col-md-6">
                                         {{input.name}}
                                     </div>
@@ -75,14 +75,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" *ngIf="contractFunctionInfo.functionName">
-                            <button class="btn btn-primary float-right" (click)="executeFunctionOnContract(contractFunctionInfo)"
-                                (click)="displayOnPaneForFunction(contractFunctionInfo.functionName)">
-                                <i class="fa fa-check-square-o" aria-hidden="true"></i>
-                            </button>
-                            <div class="loader-container" [hidden]="!displayLoader">
-                                <div *ngIf="displayLoaderFunc === contractFunctionInfo.functionName">
-                                    <div class="loader">
+                        <div class="row" *ngIf="contractFunctionInfo.functionName" style="margin: 10px 0px 10px 0px;">
+                            <div class="col-md-12">
+                                <button class="btn btn-primary float-right" (click)="executeFunctionOnContract(contractFunctionInfo)"
+                                    (click)="displayOnPaneForFunction(contractFunctionInfo.functionName)">
+                                    <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                                </button>
+                                <div class="loader-container float-right" [hidden]="!displayLoader"> 
+                                    <div *ngIf="displayLoaderFunc === contractFunctionInfo.functionName">
+                                        <div class="loader">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
