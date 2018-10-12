@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { SmartContractService } from './../smart-contract.service';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { SmartContract, SmartContractInstance, DeployedInstance } from 'src/app/models/smart-contracts.model';
+import { SmartContract, SmartContractInstance, DeployedInstance, SmartContractTransaction, SmartContractFunction } from 'src/app/models/smart-contracts.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { BsModalRef, PageChangedEvent } from 'ngx-bootstrap';
+import { BsModalRef, PageChangedEvent, BsModalService } from 'ngx-bootstrap';
 
 @Component({
   selector: 'smart-contract-instances',
@@ -16,10 +16,13 @@ export class SmartContractInstancesComponent implements OnInit {
   private startItem: number = 0;
   private endItem: number = 10;
   modalRef: BsModalRef;
-
+  functionsForContract: SmartContractFunction[];
+  smartContractTransactions: SmartContractTransaction[];
+  nonExecutedFuncSet: Set<string> = new Set<string>();
   constructor(private smartContractService: SmartContractService,
     private router: Router,
-    private acitvatedRoute: ActivatedRoute) {
+    private acitvatedRoute: ActivatedRoute,
+    private modalService: BsModalService) {
 
   }
 
@@ -44,7 +47,7 @@ export class SmartContractInstancesComponent implements OnInit {
 
   }
 
-  saveSmartContractToService(smartContractInstance: SmartContractInstance, smartContractInstanceId: number){
+  saveSmartContractToService(smartContractInstance: SmartContractInstance, smartContractInstanceId: number) {
     this.smartContractService.saveSmartContract(smartContractInstance);
     console.log(smartContractInstance);
     //[routerLink]="['./action/', instanceItem.smartContractInstanceId]"
@@ -55,8 +58,36 @@ export class SmartContractInstancesComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  navigateToDeployContract(){
-    console.log( this.deployedInstance.smartContract.smartContractId);
+  navigateToDeployContract() {
+    console.log(this.deployedInstance.smartContract.smartContractId);
     this.router.navigate(['/smartcontract/instances/deploy', this.deployedInstance.smartContract.smartContractId]);
+  }
+
+  openModal(template: TemplateRef<any>, smartContractInstanceId: number) {
+    console.log("OPen Modal...");
+    this.smartContractService.getSmartContractDeployedInstanceTransactions(smartContractInstanceId)
+      .subscribe((smartContractTransactions: SmartContractTransaction[]) => {
+        this.smartContractTransactions = smartContractTransactions;
+        console.log(smartContractTransactions);
+        if (this.smartContractTransactions && this.smartContractTransactions.length) {
+          this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
+        }
+      });
+  }
+
+  getSetofExecutedFunction(): void {
+    this.functionsForContract = this.deployedInstance.smartContract.functions;
+    this.functionsForContract.forEach(possibleFunc => {
+      let flag = 0;
+      this.smartContractTransactions.forEach(executedFunc => {
+        if (possibleFunc.functionName === executedFunc.smartContractFunction) {
+          flag = 1;
+        }
+        if (!flag) {
+          this.nonExecutedFuncSet.add(possibleFunc.functionName);
+        }
+      })
+    })
+
   }
 }

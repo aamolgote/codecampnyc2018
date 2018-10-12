@@ -402,6 +402,7 @@ namespace BAAS.Db
                     var smartContractTransaction = new SmartContractTransaction();
                     smartContractTransaction.SmartContractTransactionId = Convert.ToInt32(reader["SmartContractTransactionId"]);
                     smartContractTransaction.SmartContractDeployedInstanceId = Convert.ToInt32(reader["SmartContractDeployedInstanceId"]);
+                    smartContractTransaction.TransactionHash = reader["TransactionHash"]?.ToString();
                     smartContractTransaction.TransactionUser = reader["TransactionUser"]?.ToString();
                     smartContractTransaction.SmartContractFunction = reader["SmartContractFunction"]?.ToString();
                     smartContractTransaction.SmartContractFunctionParameters = reader["SmartContractFunctionParameters"]?.ToString();
