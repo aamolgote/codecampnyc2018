@@ -15,14 +15,10 @@ export class SmartContractService {
 
     deployContract(smartContractToBeDeployed: SmartContractToBeDeployed): Observable<DeployedInstance> {
         let apiUrl = this.baseUrl + "api/smartcontract/deploy";
-        return this.http.post<DeployedInstance>(apiUrl, smartContractToBeDeployed)
+        return this.http.post<string>(apiUrl, smartContractToBeDeployed)
             .pipe(
-                map((res: Response) => {
-                    let deployedInstance = res.json();
-                    return deployedInstance;
-                }),
-                catchError(this.handleError('deployContract'))
-            );
+                catchError(this.handleError('deployContract', null))
+            )
     }
 
 
