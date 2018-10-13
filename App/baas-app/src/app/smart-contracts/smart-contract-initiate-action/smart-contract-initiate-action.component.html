@@ -67,7 +67,7 @@
                                             </label>
                                         </div>
                                         <select class="form-control" [(ngModel)]="input.inputValue" *ngIf="input.type === 'address'">
-                                            <option *ngFor="let account of accounts" [ngValue]="account.userLoginId">
+                                            <option *ngFor="let account of accounts" [ngValue]="account.address">
                                                 {{account.userLoginId}} - {{account.address}}
                                             </option>
                                         </select>

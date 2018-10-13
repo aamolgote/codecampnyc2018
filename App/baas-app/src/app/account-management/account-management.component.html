@@ -1,4 +1,4 @@
-<div class="container" *ngIf="accounts and accounts.length">
+<div class="container" *ngIf="accounts && accounts.length">
     <div class="row">
         <div class="col-xs-12 col-12">
             <div class="content-wrapper">
@@ -15,12 +15,12 @@
                                 {{account.userLoginId}}
                             </td>
                             <td>
-                                {{acccount.address}}
+                                {{account.address}}
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-    </div>  
+    </div>
 </div>

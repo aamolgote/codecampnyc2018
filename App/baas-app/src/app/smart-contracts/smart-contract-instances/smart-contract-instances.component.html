@@ -49,7 +49,8 @@
                             <td>TBD</td>
                             <td>{{instanceItem.createdDatetime}}</td>
                             <td>
-                                <a href="javascript:void(0)" (click)="saveSmartContractToService(deployedInstance, instanceItem.smartContractInstanceId)" [routerLink]="['./action/', instanceItem.smartContractInstanceId]">
+                                <a href="javascript:void(0)" (click)="saveSmartContractToService(deployedInstance, instanceItem.smartContractInstanceId)"
+                                    [routerLink]="['./action/', instanceItem.smartContractInstanceId]">
                                     <i class="fa fa-exchange" aria-hidden="true"></i>
                                 </a>
                             </td>
@@ -119,8 +120,9 @@
                     <span>
                         {{smartContractTransaction.smartContractFunction}}
                     </span>
-                    <i *ngIf="!lastItem" class="fa fa-arrow-right" aria-hidden="true"></i>
+
                 </div>
+                <i *ngIf="!lastItem" class="fa fa-arrow-right" aria-hidden="true"></i>
             </div>
         </div>
         <div style="margin-bottom: 10px; border-top: 1px solid #dedede">

@@ -20,6 +20,7 @@ export class AccountManagementComponent {
     this.accountService.getUserAccounts()
       .subscribe((userAccounts: UserDltAccount[])=>{
         this.accounts = userAccounts;
+        console.log(this.accounts);
       });
   }
 }
