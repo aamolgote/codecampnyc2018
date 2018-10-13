@@ -95,6 +95,7 @@ namespace BAAS.PlatformWrapper
                 {
                     BlockNumber = blockNumber,
                     TransactionCount = txCount,
+                    BlockDatetime = blockDatetime,
                     BlockHash = blockEth.BlockHash,
                     Difficulty = (ulong)blockEth.Difficulty.Value,
                     GasLimit = (ulong)blockEth.GasLimit.Value,
