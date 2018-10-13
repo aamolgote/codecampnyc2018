@@ -38,7 +38,7 @@ export class BlockExplorerComponent implements OnInit {
     }
   }
 
-  pageChnaged(event: PageChangedEvent) {
+  pageChanged(event: PageChangedEvent) {
     this.startItem = (event.page - 1) * event.itemsPerPage;
     this.endItem = event.page * event.itemsPerPage;
     this.pagedDltBlocks = this.dltBlocks.slice(this.startItem, this.endItem);
@@ -64,6 +64,7 @@ export class BlockExplorerComponent implements OnInit {
             else {
               dltBlock.isCollapsed = true;
             }
+            dltBlock.blockHash = dltBlock.blockHash.trim();
           });
         }
         this.pagedDltBlocks = this.dltBlocks.slice(this.startItem, this.endItem);
