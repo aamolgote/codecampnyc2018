@@ -3,7 +3,8 @@ import { SmartContractService } from './../smart-contract.service';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AccountManagementService } from './../../account-management/account-management.service';
-import { DeployedInstance, SmartContractToBeDeployed, UserDltAccount, SmartContractInstance, InputParamsInfo } from '../../models/smart-contracts.model';
+import { DeployedInstance, SmartContractToBeDeployed, SmartContractInstance, InputParamsInfo } from '../../models/smart-contracts.model';
+import { UserDltAccount } from './../../models/user-dlt-account';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 
 @Component({

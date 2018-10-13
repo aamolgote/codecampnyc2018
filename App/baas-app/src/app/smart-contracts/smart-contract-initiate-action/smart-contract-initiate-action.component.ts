@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { SmartContractService } from './../smart-contract.service';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { SmartContract, ContractFunctionInfo, UserDltAccount, SmartContractInstance, DeployedInstance, ExecuteFunctionPayload, SmartContractTransaction, InputParamsInfo } from 'src/app/models/smart-contracts.model';
+import { SmartContract, ContractFunctionInfo, SmartContractInstance, DeployedInstance, ExecuteFunctionPayload, SmartContractTransaction, InputParamsInfo } from 'src/app/models/smart-contracts.model';
+import { UserDltAccount } from './../../models/user-dlt-account';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AccountManagementService } from '../../account-management/account-management.service';
 

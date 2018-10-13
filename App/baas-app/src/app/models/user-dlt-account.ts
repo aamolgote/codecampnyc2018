@@ -1,8 +1,8 @@
-export class UserDltAccount{
+export class UserDltAccount {
     userAccountId: number;
     userLoginId: string;
-    accountAddress: string;
+    address: string;
     passphrase: string;
-    createdDatetime: Date;
+    createdDatetime; Date;
     updatedDatetime: Date;
 }
