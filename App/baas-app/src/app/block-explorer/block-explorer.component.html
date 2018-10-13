@@ -44,9 +44,9 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <textarea rows="4" cols="30">
+                                    <span style="width:150px; word-wrap:break-word; display:inline-block;">
                                         {{dltBlock.blockHash}}
-                                    </textarea>
+                                    </span>
                                 </td>
                                 <td>{{dltBlock.size}}</td>
                                 <td>{{dltBlock.blockDatetime}}</td>
@@ -60,7 +60,7 @@
                                     <table [collapse]="dltBlock.isCollapsed">
                                         <thead>
                                             <tr>
-                                                <th>Hash</th>
+                                                <th>Transaction Hash</th>
                                                 <th>Contract Name</th>
                                                 <th>User</th>
                                                 <th>Function</th>
@@ -75,9 +75,9 @@
                                             <tr *ngFor="let dltTransaction of dltBlock.dltTransactions">
                                                 <!-- | searchfilter: 'transactionHash' : "selected" -->
                                                 <td>
-                                                    <textarea>
+                                                    <span style="width:150px; word-wrap:break-word; display:inline-block;">
                                                         {{dltTransaction.transactionHash}}
-                                                    </textarea>
+                                                    </span>
                                                 </td>
                                                 <td>{{dltTransaction.name}}</td>
                                                 <td>{{dltTransaction.transactionUser}}</td>

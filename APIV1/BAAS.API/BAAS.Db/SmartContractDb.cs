@@ -442,7 +442,7 @@ namespace BAAS.Db
                     smartContractTransaction.SmartContractFunctionParameters = reader["SmartContractFunctionParameters"]?.ToString();
                     smartContractTransaction.CreatedDatetime = string.IsNullOrEmpty(reader["CreatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["CreatedDatetime"]);
                     smartContractTransaction.UpdatedDatetime = string.IsNullOrEmpty(reader["UpdatedDatetime"]?.ToString()) ? DateTime.MinValue : Convert.ToDateTime(reader["UpdatedDatetime"]);
-
+                    smartContractTransaction.Name = reader["Name"]?.ToString();
                     List<string> paramsFromDb = reader["SmartContractFunctionParameters"].ToString().Trim(new char[] { '[', ']' }).Split(',').ToList();
                     smartContractTransaction.SmartContractFunctionParametersList = paramsFromDb;
 
